@@ -398,6 +398,8 @@ color:white;
   -webkit-overflow-scrolling:touch;
   padding:24px 18px 42px;
   background:#f7f9fc;
+  touch-action:pan-y;
+  overscroll-behavior:contain;
 }
 .pdf-page-canvas{
   display:block;
@@ -410,6 +412,7 @@ color:white;
 .pdf-page-canvas:last-child{
   margin-bottom:0;
 }
+.pdf-page-image{display:block;width:min(980px,calc(100% - 36px));height:auto;margin:0 auto 18px;background:#fff;border-radius:4px;box-shadow:0 1px 4px rgba(17,24,39,.12);user-select:none;-webkit-user-select:none;-webkit-user-drag:none;touch-action:pan-y;}
 .pdf-insert-loading{
   color:#6b7280;
   text-align:center;
@@ -1447,6 +1450,9 @@ function comfortStars(id){
   return COMFORT_STARS[id] || "";
 }
 
+const PDF_PAGE_IMAGE_MAP = {
+  "assets/pdfs/sv_indi3_afe47350301b.pdf": ["assets/images/sv_indi3_afe47350301b/single_scroll.png"],"assets/pdfs/15d04f7614fc3dca.pdf":["assets/pdf_pages/15d04f7614fc3dca_p1.jpg","assets/pdf_pages/15d04f7614fc3dca_p2.jpg"],"assets/pdfs/1730581126d9e030.pdf":["assets/pdf_pages/1730581126d9e030_p1.jpg"],"assets/pdfs/17582f2a86dcccd0.pdf":["assets/pdf_pages/17582f2a86dcccd0_p1.jpg"],"assets/pdfs/24584e8608c99298.pdf":["assets/pdf_pages/24584e8608c99298_p1.jpg","assets/pdf_pages/24584e8608c99298_p2.jpg","assets/pdf_pages/24584e8608c99298_p3.jpg","assets/pdf_pages/24584e8608c99298_p4.jpg","assets/pdf_pages/24584e8608c99298_p5.jpg","assets/pdf_pages/24584e8608c99298_p6.jpg","assets/pdf_pages/24584e8608c99298_p7.jpg","assets/pdf_pages/24584e8608c99298_p8.jpg","assets/pdf_pages/24584e8608c99298_p9.jpg","assets/pdf_pages/24584e8608c99298_p10.jpg","assets/pdf_pages/24584e8608c99298_p11.jpg","assets/pdf_pages/24584e8608c99298_p12.jpg","assets/pdf_pages/24584e8608c99298_p13.jpg","assets/pdf_pages/24584e8608c99298_p14.jpg","assets/pdf_pages/24584e8608c99298_p15.jpg","assets/pdf_pages/24584e8608c99298_p16.jpg","assets/pdf_pages/24584e8608c99298_p17.jpg","assets/pdf_pages/24584e8608c99298_p18.jpg","assets/pdf_pages/24584e8608c99298_p19.jpg","assets/pdf_pages/24584e8608c99298_p20.jpg","assets/pdf_pages/24584e8608c99298_p21.jpg","assets/pdf_pages/24584e8608c99298_p22.jpg"],"assets/pdfs/40dc24171762cc61.pdf":["assets/pdf_pages/40dc24171762cc61_p1.jpg","assets/pdf_pages/40dc24171762cc61_p2.jpg","assets/pdf_pages/40dc24171762cc61_p3.jpg","assets/pdf_pages/40dc24171762cc61_p4.jpg","assets/pdf_pages/40dc24171762cc61_p5.jpg","assets/pdf_pages/40dc24171762cc61_p6.jpg","assets/pdf_pages/40dc24171762cc61_p7.jpg","assets/pdf_pages/40dc24171762cc61_p8.jpg","assets/pdf_pages/40dc24171762cc61_p9.jpg","assets/pdf_pages/40dc24171762cc61_p10.jpg","assets/pdf_pages/40dc24171762cc61_p11.jpg","assets/pdf_pages/40dc24171762cc61_p12.jpg","assets/pdf_pages/40dc24171762cc61_p13.jpg","assets/pdf_pages/40dc24171762cc61_p14.jpg"],"assets/pdfs/4195ed44e1e11b84.pdf":["assets/pdf_pages/4195ed44e1e11b84_p1.jpg"],"assets/pdfs/4800284f41a1698d.pdf":["assets/pdf_pages/4800284f41a1698d_p1.jpg"],"assets/pdfs/550b1d24908458cd.pdf":["assets/pdf_pages/550b1d24908458cd_p1.jpg","assets/pdf_pages/550b1d24908458cd_p2.jpg","assets/pdf_pages/550b1d24908458cd_p3.jpg","assets/pdf_pages/550b1d24908458cd_p4.jpg","assets/pdf_pages/550b1d24908458cd_p5.jpg","assets/pdf_pages/550b1d24908458cd_p6.jpg","assets/pdf_pages/550b1d24908458cd_p7.jpg","assets/pdf_pages/550b1d24908458cd_p8.jpg","assets/pdf_pages/550b1d24908458cd_p9.jpg","assets/pdf_pages/550b1d24908458cd_p10.jpg"],"assets/pdfs/5cb69b740ac1159a.pdf":["assets/pdf_pages/5cb69b740ac1159a_p1.jpg","assets/pdf_pages/5cb69b740ac1159a_p2.jpg"],"assets/pdfs/5f52e8dd8f7251d5.pdf":["assets/pdf_pages/5f52e8dd8f7251d5_p1.jpg"],"assets/pdfs/61a14ee722eae9ea.pdf":["assets/pdf_pages/61a14ee722eae9ea_p1.jpg"],"assets/pdfs/6fcc5a909f711143.pdf":["assets/pdf_pages/6fcc5a909f711143_p1.jpg","assets/pdf_pages/6fcc5a909f711143_p2.jpg","assets/pdf_pages/6fcc5a909f711143_p3.jpg","assets/pdf_pages/6fcc5a909f711143_p4.jpg","assets/pdf_pages/6fcc5a909f711143_p5.jpg","assets/pdf_pages/6fcc5a909f711143_p6.jpg","assets/pdf_pages/6fcc5a909f711143_p7.jpg","assets/pdf_pages/6fcc5a909f711143_p8.jpg","assets/pdf_pages/6fcc5a909f711143_p9.jpg","assets/pdf_pages/6fcc5a909f711143_p10.jpg","assets/pdf_pages/6fcc5a909f711143_p11.jpg","assets/pdf_pages/6fcc5a909f711143_p12.jpg","assets/pdf_pages/6fcc5a909f711143_p13.jpg","assets/pdf_pages/6fcc5a909f711143_p14.jpg","assets/pdf_pages/6fcc5a909f711143_p15.jpg","assets/pdf_pages/6fcc5a909f711143_p16.jpg","assets/pdf_pages/6fcc5a909f711143_p17.jpg","assets/pdf_pages/6fcc5a909f711143_p18.jpg","assets/pdf_pages/6fcc5a909f711143_p19.jpg","assets/pdf_pages/6fcc5a909f711143_p20.jpg","assets/pdf_pages/6fcc5a909f711143_p21.jpg","assets/pdf_pages/6fcc5a909f711143_p22.jpg","assets/pdf_pages/6fcc5a909f711143_p23.jpg","assets/pdf_pages/6fcc5a909f711143_p24.jpg","assets/pdf_pages/6fcc5a909f711143_p25.jpg","assets/pdf_pages/6fcc5a909f711143_p26.jpg","assets/pdf_pages/6fcc5a909f711143_p27.jpg","assets/pdf_pages/6fcc5a909f711143_p28.jpg"],"assets/pdfs/71dd1070a10b8745.pdf":["assets/pdf_pages/71dd1070a10b8745_p1.jpg","assets/pdf_pages/71dd1070a10b8745_p2.jpg"],"assets/pdfs/7416d3b373205aca.pdf":["assets/pdf_pages/7416d3b373205aca_p1.jpg","assets/pdf_pages/7416d3b373205aca_p2.jpg","assets/pdf_pages/7416d3b373205aca_p3.jpg"],"assets/pdfs/786f19ac190958ba.pdf":["assets/pdf_pages/786f19ac190958ba_p1.jpg","assets/pdf_pages/786f19ac190958ba_p2.jpg"],"assets/pdfs/78e857d1a0ecf7c3.pdf":["assets/pdf_pages/78e857d1a0ecf7c3_p1.jpg","assets/pdf_pages/78e857d1a0ecf7c3_p2.jpg"],"assets/pdfs/91168fdf4a0f6c00.pdf":["assets/pdf_pages/91168fdf4a0f6c00_p1.jpg"],"assets/pdfs/9132503b8943cb22.pdf":["assets/pdf_pages/9132503b8943cb22_p1.jpg"],"assets/pdfs/9302c353a85cfdf7.pdf":["assets/pdf_pages/9302c353a85cfdf7_p1.jpg","assets/pdf_pages/9302c353a85cfdf7_p2.jpg"],"assets/pdfs/96b7dc653637726c.pdf":["assets/pdf_pages/96b7dc653637726c_p1.jpg","assets/pdf_pages/96b7dc653637726c_p2.jpg"],"assets/pdfs/9974da629dc32be3.pdf":["assets/pdf_pages/9974da629dc32be3_p1.jpg"],"assets/pdfs/9db4b981270d3058.pdf":["assets/pdf_pages/9db4b981270d3058_p1.jpg","assets/pdf_pages/9db4b981270d3058_p2.jpg","assets/pdf_pages/9db4b981270d3058_p3.jpg","assets/pdf_pages/9db4b981270d3058_p4.jpg","assets/pdf_pages/9db4b981270d3058_p5.jpg","assets/pdf_pages/9db4b981270d3058_p6.jpg","assets/pdf_pages/9db4b981270d3058_p7.jpg","assets/pdf_pages/9db4b981270d3058_p8.jpg","assets/pdf_pages/9db4b981270d3058_p9.jpg","assets/pdf_pages/9db4b981270d3058_p10.jpg","assets/pdf_pages/9db4b981270d3058_p11.jpg","assets/pdf_pages/9db4b981270d3058_p12.jpg","assets/pdf_pages/9db4b981270d3058_p13.jpg","assets/pdf_pages/9db4b981270d3058_p14.jpg","assets/pdf_pages/9db4b981270d3058_p15.jpg","assets/pdf_pages/9db4b981270d3058_p16.jpg","assets/pdf_pages/9db4b981270d3058_p17.jpg","assets/pdf_pages/9db4b981270d3058_p18.jpg","assets/pdf_pages/9db4b981270d3058_p19.jpg","assets/pdf_pages/9db4b981270d3058_p20.jpg","assets/pdf_pages/9db4b981270d3058_p21.jpg"],"assets/pdfs/9f04177809e9f798.pdf":["assets/pdf_pages/9f04177809e9f798_p1.jpg"],"assets/pdfs/a98dbe94b3b5e94e.pdf":["assets/pdf_pages/a98dbe94b3b5e94e_p1.jpg"],"assets/pdfs/c37c126a27ffbc57.pdf":["assets/pdf_pages/c37c126a27ffbc57_p1.jpg","assets/pdf_pages/c37c126a27ffbc57_p2.jpg"],"assets/pdfs/d298bed060afb388.pdf":["assets/pdf_pages/d298bed060afb388_p1.jpg"],"assets/pdfs/d5f58339ca13c8e1.pdf":["assets/pdf_pages/d5f58339ca13c8e1_p1.jpg"],"assets/pdfs/de5c6e1bc37eccc3.pdf":["assets/pdf_pages/de5c6e1bc37eccc3_p1.jpg","assets/pdf_pages/de5c6e1bc37eccc3_p2.jpg"],"assets/pdfs/f2bbfc381a763950.pdf":["assets/pdf_pages/f2bbfc381a763950_p1.jpg","assets/pdf_pages/f2bbfc381a763950_p2.jpg","assets/pdf_pages/f2bbfc381a763950_p3.jpg","assets/pdf_pages/f2bbfc381a763950_p4.jpg","assets/pdf_pages/f2bbfc381a763950_p5.jpg","assets/pdf_pages/f2bbfc381a763950_p6.jpg","assets/pdf_pages/f2bbfc381a763950_p7.jpg","assets/pdf_pages/f2bbfc381a763950_p8.jpg","assets/pdf_pages/f2bbfc381a763950_p9.jpg"],"assets/pdfs/f8a820248e7d77e3.pdf":["assets/pdf_pages/f8a820248e7d77e3_p1.jpg","assets/pdf_pages/f8a820248e7d77e3_p2.jpg"]};
+
 let currentPdfRenderToken = 0;
 
 function dataUriToUint8Array(dataUri){
@@ -1489,6 +1495,15 @@ async function openPdfInsert(title, pdfDataUri, collectionMeta){
     }
   }
 
+  if(typeof PDF_PAGE_IMAGE_MAP !== "undefined" && PDF_PAGE_IMAGE_MAP[pdfDataUri]){
+    currentPdfImageTitle = title || "ZEISS information";
+    currentPdfImagePages = PDF_PAGE_IMAGE_MAP[pdfDataUri].slice();
+    currentPdfImagePageIndex = 0;
+    renderPdfImagePage();
+    updatePdfImageNav();
+    return;
+  }
+
   if(!window.pdfjsLib){
     pagesEl.innerHTML = `<div class="pdf-insert-loading">PDF renderer could not load. Please check internet connection.</div>`;
     return;
@@ -1527,6 +1542,9 @@ function closePdfInsert(){
   currentPdfRenderToken++;
   currentPdfCollection = null;
   currentPdfCollectionIndex = 0;
+  currentPdfImagePages = [];
+  currentPdfImagePageIndex = 0;
+  currentPdfImageTitle = "";
   pdfSwipeState = null;
   const overlay = document.getElementById("pdfInsert");
   const pagesEl = document.getElementById("pdfInsertPages");
@@ -1536,6 +1554,56 @@ function closePdfInsert(){
   if(pagesEl) pagesEl.innerHTML = "";
   if(navEl) navEl.innerHTML = "";
   if(viewer) viewer.classList.remove("collection-mode");
+}
+
+function renderPdfImagePage(){
+  const pagesEl = document.getElementById("pdfInsertPages");
+  const viewer = document.getElementById("pdfInsertViewer");
+  if(!pagesEl || !currentPdfImagePages || !currentPdfImagePages.length) return;
+  const src = currentPdfImagePages[currentPdfImagePageIndex];
+  pagesEl.innerHTML = "";
+  const img = document.createElement("img");
+  img.className = "pdf-page-image";
+  img.src = src;
+  img.alt = `${currentPdfImageTitle || "ZEISS information"} page ${currentPdfImagePageIndex + 1}`;
+  pagesEl.appendChild(img);
+  if(viewer) viewer.scrollTop = 0;
+}
+
+function updatePdfImageNav(){
+  const navEl = document.getElementById("pdfInsertNav");
+  const titleEl = document.getElementById("pdfInsertTitle");
+  if(!navEl) return;
+
+  if(currentPdfCollection && currentPdfCollection.length > 1){
+    navEl.innerHTML = `
+      <div class="pdf-nav-btn ${currentPdfCollectionIndex === 0 ? "disabled" : ""}" onclick="switchPdfCollection(-1)">‹</div>
+      <div class="pdf-nav-btn ${currentPdfCollectionIndex === currentPdfCollection.length - 1 ? "disabled" : ""}" onclick="switchPdfCollection(1)">›</div>
+    `;
+    return;
+  }
+
+  if(currentPdfImagePages && currentPdfImagePages.length > 1){
+    navEl.innerHTML = `
+      <div class="pdf-nav-btn ${currentPdfImagePageIndex === 0 ? "disabled" : ""}" onclick="switchPdfImagePage(-1)">‹</div>
+      <div class="pdf-nav-btn ${currentPdfImagePageIndex === currentPdfImagePages.length - 1 ? "disabled" : ""}" onclick="switchPdfImagePage(1)">›</div>
+    `;
+    if(titleEl){
+      const base = currentPdfImageTitle || "ZEISS information";
+      titleEl.innerHTML = `${base}<span class="pdf-count">${currentPdfImagePageIndex + 1} / ${currentPdfImagePages.length}</span>`;
+    }
+  } else {
+    navEl.innerHTML = "";
+  }
+}
+
+function switchPdfImagePage(direction){
+  if(!currentPdfImagePages || currentPdfImagePages.length < 2) return;
+  const next = currentPdfImagePageIndex + direction;
+  if(next < 0 || next >= currentPdfImagePages.length) return;
+  currentPdfImagePageIndex = next;
+  renderPdfImagePage();
+  updatePdfImageNav();
 }
 
 function openPdfCollection(collection){
@@ -1567,31 +1635,89 @@ function setupPdfCollectionSwipe(){
   if(!viewer || viewer.__collectionSwipeReady) return;
   viewer.__collectionSwipeReady = true;
 
+  let swipeStart = null;
+  let wheelLock = false;
+
+  function hasActivePdfOverlay(){
+    const overlay = document.getElementById("pdfInsert");
+    return overlay && overlay.classList.contains("show");
+  }
+
+  function canSwipePdf(){
+    return hasActivePdfOverlay() && (
+      (currentPdfCollection && currentPdfCollection.length > 1) ||
+      (currentPdfImagePages && currentPdfImagePages.length > 1)
+    );
+  }
+
+  function doPdfSwipe(direction){
+    // direction: 1 = next, -1 = previous
+    if(currentPdfCollection && currentPdfCollection.length > 1){
+      switchPdfCollection(direction);
+      return;
+    }
+    if(currentPdfImagePages && currentPdfImagePages.length > 1){
+      switchPdfImagePage(direction);
+    }
+  }
+
+  function startSwipe(x,y){
+    if(!canSwipePdf()) return;
+    swipeStart = {x:x, y:y};
+  }
+
+  function finishSwipe(x,y,event){
+    if(!swipeStart || !canSwipePdf()) return;
+    const dx = x - swipeStart.x;
+    const dy = y - swipeStart.y;
+    swipeStart = null;
+
+    // Purposeful horizontal swipe only.
+    if(Math.abs(dx) < 45 || Math.abs(dx) <= Math.abs(dy) * 1.15) return;
+    if(event && event.cancelable) event.preventDefault();
+    doPdfSwipe(dx < 0 ? 1 : -1);
+  }
+
   viewer.addEventListener("pointerdown", function(event){
-    if(!currentPdfCollection || currentPdfCollection.length < 2) return;
-    pdfSwipeState = {
-      x:event.clientX,
-      y:event.clientY,
-      t:performance.now()
-    };
-  });
+    if(event.pointerType === "pen") return;
+    startSwipe(event.clientX, event.clientY);
+  }, {passive:true});
 
   viewer.addEventListener("pointerup", function(event){
-    if(!pdfSwipeState || !currentPdfCollection || currentPdfCollection.length < 2) return;
-    const dx = event.clientX - pdfSwipeState.x;
-    const dy = event.clientY - pdfSwipeState.y;
-    const elapsed = performance.now() - pdfSwipeState.t;
-    pdfSwipeState = null;
+    finishSwipe(event.clientX, event.clientY, event);
+  }, {passive:false});
 
-    // Horizontal swipe switches PDF. Vertical scroll remains normal.
-    if(Math.abs(dx) > 90 && Math.abs(dx) > Math.abs(dy) * 1.35 && elapsed < 900){
-      event.preventDefault();
-      switchPdfCollection(dx < 0 ? 1 : -1);
-    }
-  });
+  viewer.addEventListener("touchstart", function(event){
+    if(!event.touches || event.touches.length !== 1) return;
+    startSwipe(event.touches[0].clientX, event.touches[0].clientY);
+  }, {passive:true});
+
+  viewer.addEventListener("touchend", function(event){
+    if(!event.changedTouches || event.changedTouches.length !== 1) return;
+    finishSwipe(event.changedTouches[0].clientX, event.changedTouches[0].clientY, event);
+  }, {passive:false});
+
+  viewer.addEventListener("mousedown", function(event){
+    startSwipe(event.clientX, event.clientY);
+  }, {passive:true});
+
+  viewer.addEventListener("mouseup", function(event){
+    finishSwipe(event.clientX, event.clientY, event);
+  }, {passive:false});
+
+  // Mac trackpad horizontal swipe support.
+  viewer.addEventListener("wheel", function(event){
+    if(!canSwipePdf()) return;
+    if(Math.abs(event.deltaX) < 35 || Math.abs(event.deltaX) <= Math.abs(event.deltaY) * 1.2) return;
+    if(wheelLock) return;
+    wheelLock = true;
+    event.preventDefault();
+    doPdfSwipe(event.deltaX > 0 ? 1 : -1);
+    setTimeout(() => { wheelLock = false; }, 450);
+  }, {passive:false});
 
   viewer.addEventListener("pointercancel", function(){
-    pdfSwipeState = null;
+    swipeStart = null;
   });
 }
 setupPdfCollectionSwipe();
@@ -1602,11 +1728,13 @@ const CLEARMIND_INDIVIDUAL_WITH_PRO_PDF = "assets/pdfs/550b1d24908458cd.pdf";
 
 
 const SERIES_INTRO_PDFS = {
+  light: "assets/pdfs/9132503b8943cb22.pdf",
   smartlife: "assets/pdfs/6fcc5a909f711143.pdf",
   clearmind: "assets/pdfs/9db4b981270d3058.pdf"
 };
 
 const SERIES_INTRO_TITLES = {
+  light: "Light 2 Introduction",
   smartlife: "SmartLife PRO Introduction",
   clearmind: "ClearMind Introduction"
 };
@@ -1626,6 +1754,9 @@ const SERIES_INTRO_COLLECTIONS = {
 let currentPdfCollection = null;
 let currentPdfCollectionIndex = 0;
 let pdfSwipeState = null;
+let currentPdfImagePages = [];
+let currentPdfImagePageIndex = 0;
+let currentPdfImageTitle = "";
 
 
 function infoPdfForProduct(p){
@@ -3027,6 +3158,8 @@ function proPopoverHtml(series){
 
 const CLEARMIND_PROGRESSIVE_INDI3_INFO_PDF_DATA = "assets/pdfs/7416d3b373205aca.pdf";
 
+const CLEARMIND_SINGLE_VISION_INDI3_INFO_PDF_DATA = "assets/pdfs/sv_indi3_afe47350301b.pdf";
+
 function productTitleHtml(p){
   let name = p.name
     .replace(" Progressive Individual 3"," Progressive<br>Individual 3")
@@ -3047,6 +3180,14 @@ function productTitleHtml(p){
 
   if(p.series === "clearmind" && p.id === "cmindprog" && name.includes("Individual 3")){
     name = name.replace("Individual 3", `<span class="singlevision-word" onclick="openClearMindProgressiveIndi3Info(event)">Individual 3</span>`);
+  }
+
+  if(p.series === "clearmind" && p.id === "cmindsv" && name.includes("Individual 3")){
+    name = name.replace("Individual 3", `<span class="singlevision-word" onclick="openClearMindSingleVisionIndi3Info(event)">Individual 3</span>`);
+  }
+
+  if(p.series === "clearmind" && p.name.includes("Single Vision Individual 3") && name.includes("Individual 3") && !name.includes("openClearMindSingleVisionIndi3Info")){
+    name = name.replace("Individual 3", `<span class="singlevision-word" onclick="openClearMindSingleVisionIndi3Info(event)">Individual 3</span>`);
   }
 
   if((p.series === "clearmind" || p.series === "smartlife") && name.includes("PRO")){
@@ -3073,6 +3214,11 @@ function openClearMindProgressiveInfo(event){
 function openClearMindProgressiveIndi3Info(event){
   event.stopPropagation();
   openPdfInsert("ClearMind Progressive Individual 3", CLEARMIND_PROGRESSIVE_INDI3_INFO_PDF_DATA);
+}
+
+function openClearMindSingleVisionIndi3Info(event){
+  event.stopPropagation();
+  openPdfInsert("ClearMind Single Vision Individual 3", CLEARMIND_SINGLE_VISION_INDI3_INFO_PDF_DATA);
 }
 
 function toggleProPopover(event){
