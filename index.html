@@ -1379,6 +1379,11 @@ color:white;
   z-index:2147483000;
 }
 
+.coating-info-trigger{
+  cursor:pointer;
+  user-select:none;
+  -webkit-user-select:none;
+}
 </style>
 </head>
 <body>
@@ -1451,6 +1456,14 @@ function comfortStars(id){
 }
 
 const PDF_PAGE_IMAGE_MAP = {
+  "assets/pdfs/smartlife_young_subhero_86b742b98017.pdf": ["assets/images/smartlife_young_subhero_86b742b98017/page-1.jpg"],
+  "assets/pdfs/hero_light2_1a68d779dc28.pdf": ["assets/images/hero_light2_1a68d779dc28/continuous_scroll.jpg"],
+  "assets/pdfs/hero_smartlife_individual_3_24584e8608c9.pdf": ["assets/images/hero_smartlife_individual_3_24584e8608c9/continuous_scroll.jpg"],
+  "assets/pdfs/hero_smartlife_pro_6fcc5a909f71.pdf": ["assets/images/hero_smartlife_pro_6fcc5a909f71/continuous_scroll.jpg"],
+  "assets/pdfs/hero_clearmind_individual_3_f2bbfc381a76.pdf": ["assets/images/hero_clearmind_individual_3_f2bbfc381a76/continuous_scroll.png"],
+  "assets/pdfs/hero_clearmind_pro_40dc24171762.pdf": ["assets/images/hero_clearmind_pro_40dc24171762/continuous_scroll.png"],
+  "assets/pdfs/hero_clearmind_9db4b981270d.pdf": ["assets/images/hero_clearmind_9db4b981270d/continuous_scroll.png"],
+  "assets/pdfs/duravision_plus_coatings_82478fca0037.pdf": ["assets/images/duravision_coating_82478fca0037/duravision_plus_coatings_scroll.png"],
   "assets/pdfs/sv_indi3_afe47350301b.pdf": ["assets/images/sv_indi3_afe47350301b/single_scroll.png"],"assets/pdfs/15d04f7614fc3dca.pdf":["assets/pdf_pages/15d04f7614fc3dca_p1.jpg","assets/pdf_pages/15d04f7614fc3dca_p2.jpg"],"assets/pdfs/1730581126d9e030.pdf":["assets/pdf_pages/1730581126d9e030_p1.jpg"],"assets/pdfs/17582f2a86dcccd0.pdf":["assets/pdf_pages/17582f2a86dcccd0_p1.jpg"],"assets/pdfs/24584e8608c99298.pdf":["assets/pdf_pages/24584e8608c99298_p1.jpg","assets/pdf_pages/24584e8608c99298_p2.jpg","assets/pdf_pages/24584e8608c99298_p3.jpg","assets/pdf_pages/24584e8608c99298_p4.jpg","assets/pdf_pages/24584e8608c99298_p5.jpg","assets/pdf_pages/24584e8608c99298_p6.jpg","assets/pdf_pages/24584e8608c99298_p7.jpg","assets/pdf_pages/24584e8608c99298_p8.jpg","assets/pdf_pages/24584e8608c99298_p9.jpg","assets/pdf_pages/24584e8608c99298_p10.jpg","assets/pdf_pages/24584e8608c99298_p11.jpg","assets/pdf_pages/24584e8608c99298_p12.jpg","assets/pdf_pages/24584e8608c99298_p13.jpg","assets/pdf_pages/24584e8608c99298_p14.jpg","assets/pdf_pages/24584e8608c99298_p15.jpg","assets/pdf_pages/24584e8608c99298_p16.jpg","assets/pdf_pages/24584e8608c99298_p17.jpg","assets/pdf_pages/24584e8608c99298_p18.jpg","assets/pdf_pages/24584e8608c99298_p19.jpg","assets/pdf_pages/24584e8608c99298_p20.jpg","assets/pdf_pages/24584e8608c99298_p21.jpg","assets/pdf_pages/24584e8608c99298_p22.jpg"],"assets/pdfs/40dc24171762cc61.pdf":["assets/pdf_pages/40dc24171762cc61_p1.jpg","assets/pdf_pages/40dc24171762cc61_p2.jpg","assets/pdf_pages/40dc24171762cc61_p3.jpg","assets/pdf_pages/40dc24171762cc61_p4.jpg","assets/pdf_pages/40dc24171762cc61_p5.jpg","assets/pdf_pages/40dc24171762cc61_p6.jpg","assets/pdf_pages/40dc24171762cc61_p7.jpg","assets/pdf_pages/40dc24171762cc61_p8.jpg","assets/pdf_pages/40dc24171762cc61_p9.jpg","assets/pdf_pages/40dc24171762cc61_p10.jpg","assets/pdf_pages/40dc24171762cc61_p11.jpg","assets/pdf_pages/40dc24171762cc61_p12.jpg","assets/pdf_pages/40dc24171762cc61_p13.jpg","assets/pdf_pages/40dc24171762cc61_p14.jpg"],"assets/pdfs/4195ed44e1e11b84.pdf":["assets/pdf_pages/4195ed44e1e11b84_p1.jpg"],"assets/pdfs/4800284f41a1698d.pdf":["assets/pdf_pages/4800284f41a1698d_p1.jpg"],"assets/pdfs/550b1d24908458cd.pdf":["assets/pdf_pages/550b1d24908458cd_p1.jpg","assets/pdf_pages/550b1d24908458cd_p2.jpg","assets/pdf_pages/550b1d24908458cd_p3.jpg","assets/pdf_pages/550b1d24908458cd_p4.jpg","assets/pdf_pages/550b1d24908458cd_p5.jpg","assets/pdf_pages/550b1d24908458cd_p6.jpg","assets/pdf_pages/550b1d24908458cd_p7.jpg","assets/pdf_pages/550b1d24908458cd_p8.jpg","assets/pdf_pages/550b1d24908458cd_p9.jpg","assets/pdf_pages/550b1d24908458cd_p10.jpg"],"assets/pdfs/5cb69b740ac1159a.pdf":["assets/pdf_pages/5cb69b740ac1159a_p1.jpg","assets/pdf_pages/5cb69b740ac1159a_p2.jpg"],"assets/pdfs/5f52e8dd8f7251d5.pdf":["assets/pdf_pages/5f52e8dd8f7251d5_p1.jpg"],"assets/pdfs/61a14ee722eae9ea.pdf":["assets/pdf_pages/61a14ee722eae9ea_p1.jpg"],"assets/pdfs/6fcc5a909f711143.pdf":["assets/pdf_pages/6fcc5a909f711143_p1.jpg","assets/pdf_pages/6fcc5a909f711143_p2.jpg","assets/pdf_pages/6fcc5a909f711143_p3.jpg","assets/pdf_pages/6fcc5a909f711143_p4.jpg","assets/pdf_pages/6fcc5a909f711143_p5.jpg","assets/pdf_pages/6fcc5a909f711143_p6.jpg","assets/pdf_pages/6fcc5a909f711143_p7.jpg","assets/pdf_pages/6fcc5a909f711143_p8.jpg","assets/pdf_pages/6fcc5a909f711143_p9.jpg","assets/pdf_pages/6fcc5a909f711143_p10.jpg","assets/pdf_pages/6fcc5a909f711143_p11.jpg","assets/pdf_pages/6fcc5a909f711143_p12.jpg","assets/pdf_pages/6fcc5a909f711143_p13.jpg","assets/pdf_pages/6fcc5a909f711143_p14.jpg","assets/pdf_pages/6fcc5a909f711143_p15.jpg","assets/pdf_pages/6fcc5a909f711143_p16.jpg","assets/pdf_pages/6fcc5a909f711143_p17.jpg","assets/pdf_pages/6fcc5a909f711143_p18.jpg","assets/pdf_pages/6fcc5a909f711143_p19.jpg","assets/pdf_pages/6fcc5a909f711143_p20.jpg","assets/pdf_pages/6fcc5a909f711143_p21.jpg","assets/pdf_pages/6fcc5a909f711143_p22.jpg","assets/pdf_pages/6fcc5a909f711143_p23.jpg","assets/pdf_pages/6fcc5a909f711143_p24.jpg","assets/pdf_pages/6fcc5a909f711143_p25.jpg","assets/pdf_pages/6fcc5a909f711143_p26.jpg","assets/pdf_pages/6fcc5a909f711143_p27.jpg","assets/pdf_pages/6fcc5a909f711143_p28.jpg"],"assets/pdfs/71dd1070a10b8745.pdf":["assets/pdf_pages/71dd1070a10b8745_p1.jpg","assets/pdf_pages/71dd1070a10b8745_p2.jpg"],"assets/pdfs/7416d3b373205aca.pdf":["assets/pdf_pages/7416d3b373205aca_p1.jpg","assets/pdf_pages/7416d3b373205aca_p2.jpg","assets/pdf_pages/7416d3b373205aca_p3.jpg"],"assets/pdfs/786f19ac190958ba.pdf":["assets/pdf_pages/786f19ac190958ba_p1.jpg","assets/pdf_pages/786f19ac190958ba_p2.jpg"],"assets/pdfs/78e857d1a0ecf7c3.pdf":["assets/pdf_pages/78e857d1a0ecf7c3_p1.jpg","assets/pdf_pages/78e857d1a0ecf7c3_p2.jpg"],"assets/pdfs/91168fdf4a0f6c00.pdf":["assets/pdf_pages/91168fdf4a0f6c00_p1.jpg"],"assets/pdfs/9132503b8943cb22.pdf":["assets/pdf_pages/9132503b8943cb22_p1.jpg"],"assets/pdfs/9302c353a85cfdf7.pdf":["assets/pdf_pages/9302c353a85cfdf7_p1.jpg","assets/pdf_pages/9302c353a85cfdf7_p2.jpg"],"assets/pdfs/96b7dc653637726c.pdf":["assets/pdf_pages/96b7dc653637726c_p1.jpg","assets/pdf_pages/96b7dc653637726c_p2.jpg"],"assets/pdfs/9974da629dc32be3.pdf":["assets/pdf_pages/9974da629dc32be3_p1.jpg"],"assets/pdfs/9db4b981270d3058.pdf":["assets/pdf_pages/9db4b981270d3058_p1.jpg","assets/pdf_pages/9db4b981270d3058_p2.jpg","assets/pdf_pages/9db4b981270d3058_p3.jpg","assets/pdf_pages/9db4b981270d3058_p4.jpg","assets/pdf_pages/9db4b981270d3058_p5.jpg","assets/pdf_pages/9db4b981270d3058_p6.jpg","assets/pdf_pages/9db4b981270d3058_p7.jpg","assets/pdf_pages/9db4b981270d3058_p8.jpg","assets/pdf_pages/9db4b981270d3058_p9.jpg","assets/pdf_pages/9db4b981270d3058_p10.jpg","assets/pdf_pages/9db4b981270d3058_p11.jpg","assets/pdf_pages/9db4b981270d3058_p12.jpg","assets/pdf_pages/9db4b981270d3058_p13.jpg","assets/pdf_pages/9db4b981270d3058_p14.jpg","assets/pdf_pages/9db4b981270d3058_p15.jpg","assets/pdf_pages/9db4b981270d3058_p16.jpg","assets/pdf_pages/9db4b981270d3058_p17.jpg","assets/pdf_pages/9db4b981270d3058_p18.jpg","assets/pdf_pages/9db4b981270d3058_p19.jpg","assets/pdf_pages/9db4b981270d3058_p20.jpg","assets/pdf_pages/9db4b981270d3058_p21.jpg"],"assets/pdfs/9f04177809e9f798.pdf":["assets/pdf_pages/9f04177809e9f798_p1.jpg"],"assets/pdfs/a98dbe94b3b5e94e.pdf":["assets/pdf_pages/a98dbe94b3b5e94e_p1.jpg"],"assets/pdfs/c37c126a27ffbc57.pdf":["assets/pdf_pages/c37c126a27ffbc57_p1.jpg","assets/pdf_pages/c37c126a27ffbc57_p2.jpg"],"assets/pdfs/d298bed060afb388.pdf":["assets/pdf_pages/d298bed060afb388_p1.jpg"],"assets/pdfs/d5f58339ca13c8e1.pdf":["assets/pdf_pages/d5f58339ca13c8e1_p1.jpg"],"assets/pdfs/de5c6e1bc37eccc3.pdf":["assets/pdf_pages/de5c6e1bc37eccc3_p1.jpg","assets/pdf_pages/de5c6e1bc37eccc3_p2.jpg"],"assets/pdfs/f2bbfc381a763950.pdf":["assets/pdf_pages/f2bbfc381a763950_p1.jpg","assets/pdf_pages/f2bbfc381a763950_p2.jpg","assets/pdf_pages/f2bbfc381a763950_p3.jpg","assets/pdf_pages/f2bbfc381a763950_p4.jpg","assets/pdf_pages/f2bbfc381a763950_p5.jpg","assets/pdf_pages/f2bbfc381a763950_p6.jpg","assets/pdf_pages/f2bbfc381a763950_p7.jpg","assets/pdf_pages/f2bbfc381a763950_p8.jpg","assets/pdf_pages/f2bbfc381a763950_p9.jpg"],"assets/pdfs/f8a820248e7d77e3.pdf":["assets/pdf_pages/f8a820248e7d77e3_p1.jpg","assets/pdf_pages/f8a820248e7d77e3_p2.jpg"]};
 
 let currentPdfRenderToken = 0;
@@ -1727,27 +1740,29 @@ const CLEARMIND_PRO_RANGE_PDF_DATA = "assets/pdfs/de5c6e1bc37eccc3.pdf";
 const CLEARMIND_INDIVIDUAL_WITH_PRO_PDF = "assets/pdfs/550b1d24908458cd.pdf";
 
 
+const SMARTLIFE_YOUNG_SUBHERO_PDF_DATA = "assets/pdfs/smartlife_young_subhero_86b742b98017.pdf";
+
 const SERIES_INTRO_PDFS = {
-  light: "assets/pdfs/9132503b8943cb22.pdf",
+  light: "assets/pdfs/hero_light2_1a68d779dc28.pdf",
   smartlife: "assets/pdfs/6fcc5a909f711143.pdf",
   clearmind: "assets/pdfs/9db4b981270d3058.pdf"
 };
 
 const SERIES_INTRO_TITLES = {
-  light: "Light 2 Introduction",
+  light: "ZEISS Light 2 Lenses",
   smartlife: "SmartLife PRO Introduction",
   clearmind: "ClearMind Introduction"
 };
 
 const SERIES_INTRO_COLLECTIONS = {
   smartlife: [
-    { title: "SmartLife PRO", pdf: "assets/pdfs/6fcc5a909f711143.pdf" },
-    { title: "SmartLife Individual 3", pdf: "assets/pdfs/24584e8608c99298.pdf" }
+    { title: "SmartLife PRO", pdf: "assets/pdfs/hero_smartlife_pro_6fcc5a909f71.pdf" },
+    { title: "SmartLife Individual 3", pdf: "assets/pdfs/hero_smartlife_individual_3_24584e8608c9.pdf" }
   ],
   clearmind: [
-    { title: "ClearMind Lenses", pdf: "assets/pdfs/9db4b981270d3058.pdf" },
-    { title: "ClearMind PRO", pdf: "assets/pdfs/40dc24171762cc61.pdf" },
-    { title: "ClearMind Individual 3", pdf: "assets/pdfs/f2bbfc381a763950.pdf" }
+    { title: "ClearMind", pdf: "assets/pdfs/hero_clearmind_9db4b981270d.pdf" },
+    { title: "ClearMind PRO", pdf: "assets/pdfs/hero_clearmind_pro_40dc24171762.pdf" },
+    { title: "ClearMind Individual 3", pdf: "assets/pdfs/hero_clearmind_individual_3_f2bbfc381a76.pdf" }
   ]
 };
 
@@ -1809,14 +1824,14 @@ const categoryNames = {
   progressive:"Progressive",
   digital:"Digital",
   single:"Single Vision",
-  young:"Young PRO"
+  young:"Young"
 };
 
 const categorySubs = {
   progressive:"Progressive lenses",
   digital:"Digital lenses",
   single:"Single Vision lenses",
-  young:"Young PRO lenses"
+  young:"For young children"
 };
 
 const coatingNames = {
@@ -2937,6 +2952,15 @@ function renderHome(){
   app("Lens Navigator", body);
 }
 
+
+function openSmartLifeYoungSubHeroInfo(event){
+  if(event){
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  openPdfInsert("ZEISS SmartLife Young PRO", SMARTLIFE_YOUNG_SUBHERO_PDF_DATA);
+}
+
 function renderCategories(seriesId){
   if(seriesId) state.series = seriesId;
   state.screen = "categories";
@@ -3158,6 +3182,8 @@ function proPopoverHtml(series){
 
 const CLEARMIND_PROGRESSIVE_INDI3_INFO_PDF_DATA = "assets/pdfs/7416d3b373205aca.pdf";
 
+const DURAVISION_PLUS_COATING_INFO_PDF_DATA = "assets/pdfs/duravision_plus_coatings_82478fca0037.pdf";
+
 const CLEARMIND_SINGLE_VISION_INDI3_INFO_PDF_DATA = "assets/pdfs/sv_indi3_afe47350301b.pdf";
 
 function productTitleHtml(p){
@@ -3193,7 +3219,16 @@ function productTitleHtml(p){
   if((p.series === "clearmind" || p.series === "smartlife") && name.includes("PRO")){
     name = name.replace("PRO", `<span class="pro-word" onclick="toggleProPopover(event)">PRO${proPopoverHtml(p.series)}</span>`);
   }
+  if(p.id === "syp" && name.includes("Young")){
+    name = name.replace("Young", `<span class="singlevision-word" onclick="openSmartLifeYoungSubHeroInfo(event)">Young</span>`);
+  }
+
   return name;
+}
+
+function openDuraVisionCoatingInfo(event){
+  if(event) event.stopPropagation();
+  openPdfInsert("ZEISS DuraVision Plus Coatings", DURAVISION_PLUS_COATING_INFO_PDF_DATA);
 }
 
 function openClearMindSingleVisionInfo(event){
@@ -3413,7 +3448,7 @@ function renderDetail(){
     </div>
 
     <div class="panel">
-      <div class="label">Coating</div>
+      <div class="label coating-info-trigger" onclick="openDuraVisionCoatingInfo(event)">Coating</div>
       <div class="note">UV + BlueGuard included with all ZEISS lenses</div>
       ${coatingRows}
     </div>
@@ -3457,15 +3492,8 @@ function basePrice(){
 
 function photoPrice(){
   const p = selectedProduct();
-  if(p.priceMode === "matrix"){
-    const clear = p.prices[state.coating][state.index];
-    const pf = p.photoFusionPrices[state.coating][state.index];
-    return pf == null || clear == null ? null : pf - clear;
-  }
-  if(p.pfusion && p.pfusion[state.index] != null && p.indices && p.indices[state.index] != null){
-    return p.pfusion[state.index] - p.indices[state.index];
-  }
-  return p.series === "clearmind" ? 400 : 500;
+  if(!p) return null;
+  return 500;
 }
 
 
