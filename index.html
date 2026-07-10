@@ -2872,6 +2872,10 @@ function finalBuildCard(b){
       <div class="final-summary-stars">${lensStars}</div>
     </div>
     ${lensImage ? `<div class="final-summary-image" data-sync-section="summary-image"><img src="${lensImage}" alt="${b.name}"></div>` : ``}
+    <div class="final-summary-why" data-sync-section="summary-why">
+      <div class="final-summary-label">Why This Lens</div>
+      <div class="final-summary-why-body">${((product && product.why) || []).map(x => `<div class="compare-bullet"><span>${x}</span></div>`).join("")}</div>
+    </div>
     ${finalSummaryRow("Index", b.index, indexAmount, "summary-index")}
     ${finalSummaryRow("Coating", b.coatingText, coatingAmount, "summary-coating")}
     ${optionRows.join("")}
@@ -2904,7 +2908,7 @@ function finalCompareBody(pair, fading=false){
 function syncFinalCompareHeights(){
   const grid = document.getElementById('finalCompareGrid');
   if(!grid) return;
-  const sections = ['summary-lens','summary-image','summary-index','summary-coating','summary-photo','summary-iscription'];
+  const sections = ['summary-lens','summary-image','summary-why','summary-index','summary-coating','summary-photo','summary-iscription'];
   sections.forEach(key => {
     const nodes = Array.from(grid.querySelectorAll(`[data-sync-section="${key}"]`));
     if(nodes.length < 2) return;
