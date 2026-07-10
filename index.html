@@ -3898,9 +3898,9 @@ function labelTypeFamilyText(p){
 
   // Light 2 uses its own exact design codes. Preserve them exactly in print.
   if(p.series === "light"){
-    if(/Progressive\s+3Dv/i.test(name) || /\b3Dv\b/.test(name)) return "Progressive 3Dv";
-    if(/Progressive\s+3D/i.test(name) || /\b3D\b/i.test(name) && state.category === "progressive") return "Progressive 3D";
-    if(/Progressive\s+D\b/i.test(name) || /\bD\b/.test(name) && state.category === "progressive") return "Progressive D";
+    if(/Progressive\s+3Dv/i.test(name) || /\b3Dv\b/.test(name)) return "Prog 3Dv";
+    if(/Progressive\s+3D/i.test(name) || /\b3D\b/i.test(name) && state.category === "progressive") return "Prog 3D";
+    if(/Progressive\s+D\b/i.test(name) || /\bD\b/.test(name) && state.category === "progressive") return "Prog D";
     if(/Digital\s+3D/i.test(name) || /\b3D\b/i.test(name) && state.category === "digital") return "Digital 3D";
   }
 
@@ -3910,7 +3910,7 @@ function labelTypeFamilyText(p){
   else if(/Superb/i.test(name)) tier = "Superb";
   else if(/Plus/i.test(name)) tier = "Plus";
   else if(/Pure/i.test(name)) tier = "Pure";
-  const typeMap = {progressive:"Progressive",digital:"Digital",single:"SV",sv:"SV",young:"Young SV"};
+  const typeMap = {progressive:"Prog",digital:"Digital",single:"SV",sv:"SV",young:"Young SV"};
   const type = typeMap[state.category] || labelCategoryText();
   return [type,tier].filter(Boolean).join(" ");
 }
