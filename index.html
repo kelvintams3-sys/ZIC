@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="zic-release" content="2026-09-18-category-descriptions">
 <title>ZEISS Lens Navigator Stable 7</title>
 <style>
 :root{
@@ -12,6 +13,7 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text)}
 .app{max-width:980px;margin:0 auto;min-height:100vh;padding:24px 34px 40px}
+.app.compare-layout{max-width:1540px}
 .nav{display:grid;grid-template-columns:120px 1fr 120px;align-items:center;margin-bottom:30px}
 .nav-compact{display:block;margin-bottom:12px}
 .back{color:var(--ios);font-size:22px;cursor:pointer;user-select:none}
@@ -144,14 +146,19 @@ body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,
 .compare-check .empty,.compare-check .mark{transform:scale(.82);margin:0}
 .compare-bar{position:sticky;bottom:12px;background:white;border:1px solid var(--line);border-radius:18px;padding:16px 20px;margin-top:18px;box-shadow:0 8px 24px rgba(0,0,0,.08);display:flex;justify-content:space-between;gap:16px;align-items:center}
 .compare-bar-title{color:var(--ink);font-size:18px;font-weight:750}
-.compare-bar-sub{color:var(--muted);font-size:15px;margin-top:4px}
+.compare-bar-main{min-width:0;flex:1}
+.compare-bar-sub{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.compare-summary-chip{cursor:default;pointer-events:none}
+.compare-bar-actions{display:flex;gap:10px;flex:0 0 auto}
 .category-hidden-note{color:var(--muted);font-size:16px;margin:0 0 16px;text-align:center}
-.compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.compare-grid{display:grid;grid-template-columns:repeat(var(--compare-count,3),minmax(0,1fr));gap:14px}
 .compare-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
 .compare-name{color:var(--ink);font-size:20px;font-weight:760;line-height:1.18;min-height:70px}
 .compare-tag{color:var(--muted);font-size:15px;margin:8px 0 12px;line-height:1.25;min-height:38px;display:flex;align-items:flex-start}
 .compare-image-stage{width:100%;height:180px;display:flex;align-items:center;justify-content:center;border:1px solid #f0f1f3;border-radius:14px;overflow:hidden;background:#fff}
 .compare-image-stage img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.compare-image-stage.compare-image-link{cursor:pointer;touch-action:manipulation;transition:transform .14s ease,border-color .14s ease,box-shadow .14s ease}
+.compare-image-stage.compare-image-link:active{transform:scale(.985);border-color:#1266d6;box-shadow:0 0 0 2px rgba(18,102,214,.08)}
 .compare-price{font-size:18px;font-weight:750;color:var(--ink);margin-top:12px}
 .compare-bullet{font-size:15px;color:#374151;line-height:1.35;margin:8px 0;display:grid;grid-template-columns:14px 1fr;column-gap:6px}.compare-bullet::before{content:'•';grid-column:1}.compare-bullet span{grid-column:2}
 .compare-section-title{height:28px;display:flex;align-items:flex-end;margin-top:14px;margin-bottom:8px;font-size:14px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:#6b7280}.compare-why-body,.compare-req-body{display:block}
@@ -205,8 +212,8 @@ color:white;
   transform:translateX(-50%);
   bottom:max(14px, env(safe-area-inset-bottom));
   width:min(920px, calc(100vw - 24px));
-  background:#fff;
-  border:1px solid var(--line);
+  background:#F1F6FD;
+  border:1px solid #C9D9EE;
   border-radius:18px;
   padding:18px 20px;
   box-shadow:0 8px 24px rgba(0,0,0,.10);
@@ -220,6 +227,8 @@ color:white;
 }
 .sticky-price-footer:active{
   transform:translateX(-50%) scale(.992);
+  background:#E8F1FC;
+  border-color:#AFC8E7;
 }
 .why-rec-title{color:var(--ink);font-size:28px;font-weight:800;margin-bottom:18px}
 .why-rec-series{color:var(--ink);font-size:22px;font-weight:800;margin-bottom:8px}
@@ -848,7 +857,7 @@ color:white;
 /* Stable 13.1 RC1 — Consultation Edition */
 .app.has-sticky-price{padding-bottom:126px;}
 .app.has-sticky-price.has-build-strip{padding-bottom:176px;}
-.sticky-price-footer{transition:bottom .22s ease, box-shadow .22s ease;}
+.sticky-price-footer{transition:bottom .22s ease,box-shadow .22s ease,background-color .16s ease,border-color .16s ease,transform .12s ease;}
 .sticky-price-footer.has-builds{bottom:max(58px, calc(env(safe-area-inset-bottom) + 58px));}
 .sticky-footer-wrap{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(920px, calc(100vw - 24px));z-index:10002;pointer-events:none;}
 .build-strip-wrap{position:fixed;left:50%;transform:translateX(-50%);bottom:max(8px, env(safe-area-inset-bottom));width:min(900px, calc(100vw - 50px));z-index:10001;pointer-events:auto;}
@@ -866,7 +875,7 @@ color:white;
 @keyframes toastIn{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
 .product-card .comfort-stars{display:inline-block;min-width:82px;text-align:left;}
 .final-compare-page{padding-bottom:150px;}
-.final-compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;transition:opacity .38s ease;}
+.final-compare-grid{display:grid;grid-template-columns:repeat(var(--final-build-count,2),minmax(0,1fr));gap:16px;align-items:start;transition:opacity .38s ease;}
 .final-compare-grid.crossfade{opacity:.18;}
 .final-build-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;}
 .final-title-zone{min-height:60px;display:flex;align-items:flex-start;justify-content:center;text-align:center;box-sizing:border-box;}
@@ -885,11 +894,11 @@ color:white;
 .final-price-row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #eef2f7;padding:8px 0;font-size:15px;}
 .final-price-row .muted{color:#64748b;}
 .final-price-row .strong{font-weight:760;color:#111827;}
-.final-difference{margin:16px auto 0;text-align:center;color:#64748b;font-size:14px;font-weight:750;}
-.final-sticky-bars{position:fixed;left:50%;transform:translateX(-50%);bottom:max(58px, calc(env(safe-area-inset-bottom) + 58px));width:min(920px, calc(100vw - 24px));display:grid;grid-template-columns:1fr 1fr;gap:16px;z-index:10003;pointer-events:auto;}
-.final-price-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 18px;box-shadow:0 8px 24px rgba(0,0,0,.10);text-align:center;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:78px;box-sizing:border-box;}
+.final-sticky-bars{position:fixed;left:50%;transform:translateX(-50%);bottom:max(58px, calc(env(safe-area-inset-bottom) + 58px));width:min(920px, calc(100vw - 24px));display:grid;grid-template-columns:repeat(var(--final-build-count,2),minmax(0,1fr));gap:16px;z-index:10003;pointer-events:auto;}
+.final-price-card{background:#F1F6FD;border:1px solid #C9D9EE;border-radius:18px;padding:14px 18px;box-shadow:0 8px 24px rgba(0,0,0,.10);text-align:center;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:78px;box-sizing:border-box;transition:background-color .16s ease,border-color .16s ease,transform .12s ease,box-shadow .16s ease;}
+.final-price-card:active{background:#E8F1FC;border-color:#AFC8E7;transform:scale(.992);}
 .final-price-title{min-height:18px;line-height:1.18;color:var(--muted);font-size:13px;font-weight:800;opacity:.82;text-align:center;white-space:normal;overflow:hidden;width:100%;margin-bottom:4px;display:flex;align-items:flex-start;justify-content:center;box-sizing:border-box;}
-.final-price-amount{color:#111827 !important;font-size:22px;line-height:1.25;font-weight:850;letter-spacing:0;display:block;white-space:nowrap;}
+.final-price-amount{color:var(--ink) !important;font-size:22px;line-height:1.25;font-weight:850;letter-spacing:0;display:block;white-space:nowrap;}
 .final-empty{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px;text-align:center;color:#64748b;font-size:18px;line-height:1.4;}
 @media(max-width:760px){
   .home-hero-list{gap:24px}.hero-card{padding-bottom:38%}
@@ -987,6 +996,9 @@ color:white;
   line-height:1.2;
   text-align:right;
   white-space:nowrap;
+}
+.final-summary-amount .complimentary-price-stack{
+  align-items:flex-end;
 }
 .final-summary-total{
   padding-top:20px;
@@ -1436,7 +1448,7 @@ const CLEARMIND_PRO_PDF_DATA = {"cmsv": "assets/pdfs/d298bed060afb388.pdf", "cmi
 
 const COMFORT_STARS = {
   // Light Series
-  ld:"★★", l3d:"★★", l3dv:"★★",
+  ldig:"★★", ld:"★★", l3d:"★★", l3dv:"★★",
 
   // SmartLife PRO
   syp:"★★★",
@@ -1801,6 +1813,22 @@ CLEARMIND_PROGRESSIVE_WHY_IMAGES["cmindprog"] = "assets/images/0375be456c7c7d4e.
 DATA.clearmind.progressive.forEach(p => { if (CLEARMIND_PROGRESSIVE_WHY_IMAGES[p.id]) p.image = CLEARMIND_PROGRESSIVE_WHY_IMAGES[p.id]; });
 // End ClearMind progressive why-this-lens images
 
+// ClearMind digital why-this-lens images
+const CLEARMIND_DIGITAL_WHY_IMAGES = {
+  cmdig: "assets/images/cm_digital_superb.png",
+  cminddig: "assets/images/cm_digital_individual.png"
+};
+DATA.clearmind.digital.forEach(p => {
+  if (CLEARMIND_DIGITAL_WHY_IMAGES[p.id]) p.image = CLEARMIND_DIGITAL_WHY_IMAGES[p.id];
+});
+// End ClearMind digital why-this-lens images
+
+// Light 2 digital why-this-lens image
+DATA.light.digital.forEach(p => {
+  if (p.id === "ldig") p.image = "assets/images/light2_digital.png";
+});
+// End Light 2 digital why-this-lens image
+
 const SERIES_NAMES = {
   light: "ZEISS Progressive Light 2",
   smartlife: "ZEISS SmartLife PRO",
@@ -1828,8 +1856,8 @@ const categoryNames = {
 };
 
 const categorySubs = {
-  progressive:"Progressive lenses",
-  digital:"Digital lenses",
+  progressive:"Seamless vision from near to far, at every distance.",
+  digital:"Clear distance vision with added support for screens and close work, suitable for reading additions up to +1.25D.",
   single:"Single Vision lenses",
   young:"For young children"
 };
@@ -1889,9 +1917,12 @@ function updateVisibleComplimentaryRows(key){
 }
 
 let compareState = {type:null,items:[]};
+let comparisonDetailReturn = null;
 let consultationBuilds = [];
 let selectedBuildIds = [];
-let activeFinalPair = [];
+let activeFinalBuildIds = [];
+const MAX_BUILD_COMPARISONS = 3;
+const MAX_GENERAL_COMPARISONS = 5;
 let buildUidCounter = 1;
 let framePrice = null;
 let frameDraft = "";
@@ -2022,7 +2053,7 @@ function selectSummaryPhotoFusionColour(colour, event){
 function toggleFinalPhotoColourPicker(uid, event){
   if(event) event.stopPropagation();
   finalPhotoColourOpenBuildId = finalPhotoColourOpenBuildId === uid ? null : uid;
-  renderFinalCompare(activeFinalPair);
+  renderFinalCompare(activeFinalBuildIds);
 }
 
 function selectFinalPhotoFusionColour(uid, colour, event){
@@ -2046,7 +2077,7 @@ function selectFinalPhotoFusionColour(uid, colour, event){
     }
   }
   finalPhotoColourOpenBuildId = null;
-  renderFinalCompare(activeFinalPair);
+  renderFinalCompare(activeFinalBuildIds);
 }
 
 
@@ -2336,14 +2367,16 @@ document.addEventListener("DOMContentLoaded", setupConsultationScribbles);
 function app(title, body){
   clearConsultationScribbles();
   const isHome = state.screen === "home";
+  const useWideComparison = state.screen === "compare";
   const showStickyPrice = state.screen === "detail" && !!state.product;
   const showSeriesSwitcher = !isHome && state.screen !== "detail" && state.screen !== "summary" && state.screen !== "finalCompare";
+  const backLabel = state.screen === "detail" && comparisonDetailReturn ? "‹ Comparison" : "‹ Back";
 
   // Final refinement: Hero page stays clean. Every inner screen gets Home + Back.
   const header = !isHome ? `
       <div class="nav-final">
         <div class="nav-home" onclick="startNewConsultation()">⌂ Home</div>
-        <div class="nav-back" onclick="goBack()">‹ Back</div>
+        <div class="nav-back" onclick="goBack()">${backLabel}</div>
       </div>` : ``;
 
   const switcher = showSeriesSwitcher ? `
@@ -2354,7 +2387,7 @@ function app(title, body){
       </div>` : ``;
 
   document.getElementById("app").innerHTML = `
-    <div class="app screen-shell ${showStickyPrice ? "has-sticky-price" : ""} ${consultationBuilds.length ? "has-build-strip" : ""}">
+    <div class="app screen-shell ${useWideComparison ? "compare-layout" : ""} ${showStickyPrice ? "has-sticky-price" : ""} ${consultationBuilds.length ? "has-build-strip" : ""}">
       ${header}
       ${body}
       ${switcher}
@@ -2780,15 +2813,11 @@ function removeSavedBuild(uid){
   const b = buildByUid(uid);
   consultationBuilds = consultationBuilds.filter(x => x.uid !== uid);
   selectedBuildIds = selectedBuildIds.filter(id => id !== uid);
-  activeFinalPair = activeFinalPair.filter(id => id !== uid);
+  activeFinalBuildIds = activeFinalBuildIds.filter(id => id !== uid);
   showBuildToast(b ? `Removed ${buildLabel(b)}` : 'Removed build');
   renderStickyFooter();
   if(state.screen === 'finalCompare'){
-    if(selectedBuildIds.length === 2){
-      renderFinalCompare(selectedBuildIds.slice());
-    } else {
-      renderFinalCompare(activeFinalPair.length === 2 ? activeFinalPair.slice() : selectedBuildIds.slice());
-    }
+    renderFinalCompare(selectedBuildIds.slice());
   }
 }
 function toggleBuildSelection(event, uid){
@@ -2800,18 +2829,27 @@ function toggleBuildSelection(event, uid){
   clearTimeout(buildRemovePressTimer);
   if(selectedBuildIds.includes(uid)){
     selectedBuildIds = selectedBuildIds.filter(id => id !== uid);
-    renderStickyFooter();
+    if(state.screen === 'finalCompare'){
+      const nextBuildIds = selectedBuildIds.slice();
+      if(nextBuildIds.length >= 2 && activeFinalBuildIds.length >= 2){
+        crossfadeFinalCompare(nextBuildIds);
+      } else {
+        renderFinalCompare(nextBuildIds);
+      }
+    } else {
+      renderStickyFooter();
+    }
     return;
   }
-  if(selectedBuildIds.length >= 2){ showBuildToast('Select only two builds'); return; }
+  if(selectedBuildIds.length >= MAX_BUILD_COMPARISONS){ showBuildToast('Select up to three builds'); return; }
   selectedBuildIds.push(uid);
   renderStickyFooter();
-  if(selectedBuildIds.length === 2){
-    const newPair = selectedBuildIds.slice();
-    if(state.screen === 'finalCompare' && activeFinalPair.length === 2){
-      crossfadeFinalCompare(newPair);
+  if(selectedBuildIds.length >= 2){
+    const nextBuildIds = selectedBuildIds.slice();
+    if(state.screen === 'finalCompare' && activeFinalBuildIds.length >= 2){
+      crossfadeFinalCompare(nextBuildIds);
     } else {
-      renderFinalCompare(newPair);
+      renderFinalCompare(nextBuildIds);
     }
   }
 }
@@ -2833,6 +2871,12 @@ function activateBuild(uid){
 function finalLinePrice(b, matchText){
   const line = (b.priceLines || []).find(x => String(x[0]).toLowerCase().includes(matchText.toLowerCase()));
   return line ? line[1] : "—";
+}
+function finalOptionPriceHtml(b, key, regularPrice, matchText){
+  if(b.complimentaryOptions && b.complimentaryOptions[key]){
+    return `<span class="complimentary-price-stack is-complimentary"><span class="complimentary-price-struck">${regularPrice}</span><span class="complimentary-pill">COMPLIMENTARY</span></span>`;
+  }
+  return finalLinePrice(b, matchText);
 }
 function finalSummaryRow(label, value, amount, key, attrs="", afterHtml=""){
   const valueHtml = value ? `<div class="final-summary-value">${value}</div>` : ``;
@@ -2856,14 +2900,14 @@ function finalBuildCard(b){
     optionRows.push(finalSummaryRow(
       pfName,
       "",
-      finalLinePrice(b, "PhotoFusion"),
+      finalOptionPriceHtml(b, "photo", "+RM500", "PhotoFusion"),
       "summary-photo",
       'onclick="toggleFinalPhotoColourPicker(\'' + b.uid + '\', event)"',
       picker
     ));
   }
   if(b.options && b.options.iscription){
-    optionRows.push(finalSummaryRow("i.Scription", "", finalLinePrice(b, "i.Scription"), "summary-iscription"));
+    optionRows.push(finalSummaryRow("i.Scription", "", finalOptionPriceHtml(b, "iscription", "+RM100", "i.Scription"), "summary-iscription"));
   }
   return `<div class="final-build-card final-summary-card">
     <div class="final-summary-lens" data-sync-section="summary-lens">
@@ -2881,27 +2925,21 @@ function finalBuildCard(b){
     ${optionRows.join("")}
   </div>`;
 }
-function finalStickyBars(pair){
-  const [a,b] = pair.map(buildByUid);
-  if(!a || !b) return '';
-  return `<div class="final-sticky-bars">
-    <div class="final-price-card" onclick="activateBuild('${a.uid}'); renderSummary();">
-      <div class="final-price-title" data-sync-total-title>${a.shortName}</div>
-      <div class="final-price-amount">Total: ${money(a.total)}</div>
-    </div>
-    <div class="final-price-card" onclick="activateBuild('${b.uid}'); renderSummary();">
+function finalStickyBars(buildIds){
+  const builds = buildIds.map(buildByUid).filter(Boolean).slice(0,MAX_BUILD_COMPARISONS);
+  if(builds.length < 2) return '';
+  return `<div class="final-sticky-bars" style="--final-build-count:${builds.length}">
+    ${builds.map(b => `<div class="final-price-card" onclick="activateBuild('${b.uid}'); renderSummary();">
       <div class="final-price-title" data-sync-total-title>${b.shortName}</div>
       <div class="final-price-amount">Total: ${money(b.total)}</div>
-    </div>
+    </div>`).join('')}
   </div>`;
 }
-function finalCompareBody(pair, fading=false){
-  const builds = pair.map(buildByUid).filter(Boolean);
-  if(builds.length !== 2) return `<div class="final-empty">Select two saved builds to compare.</div>`;
-  const diff = Math.abs(builds[0].total - builds[1].total);
+function finalCompareBody(buildIds, fading=false){
+  const builds = buildIds.map(buildByUid).filter(Boolean).slice(0,MAX_BUILD_COMPARISONS);
+  if(builds.length < 2) return `<div class="final-empty">Select two or three saved builds to compare.</div>`;
   return `<div class="final-compare-page">
-    <div id="finalCompareGrid" class="final-compare-grid ${fading ? 'crossfade' : ''}">${builds.map(finalBuildCard).join('')}</div>
-    <div class="final-difference">Difference ${money(diff)}</div>
+    <div id="finalCompareGrid" class="final-compare-grid ${fading ? 'crossfade' : ''}" style="--final-build-count:${builds.length}">${builds.map(finalBuildCard).join('')}</div>
   </div>`;
 }
 
@@ -2929,18 +2967,18 @@ function scheduleFinalCompareSync(){
     setTimeout(syncFinalCompareHeights, 120);
   });
 }
-function renderFinalCompare(pair){
+function renderFinalCompare(buildIds){
   state.screen = 'finalCompare';
-  activeFinalPair = pair.slice();
-  app('', finalCompareBody(pair));
+  activeFinalBuildIds = buildIds.map(id => buildByUid(id)).filter(Boolean).map(b => b.uid).slice(0,MAX_BUILD_COMPARISONS);
+  app('', finalCompareBody(activeFinalBuildIds));
   const sticky = document.getElementById('stickyFooter');
-  if(sticky) sticky.innerHTML = finalStickyBars(pair) + buildStripMarkup();
+  if(sticky) sticky.innerHTML = finalStickyBars(activeFinalBuildIds) + buildStripMarkup();
   scheduleFinalCompareSync();
 }
-function crossfadeFinalCompare(pair){
+function crossfadeFinalCompare(buildIds){
   const grid = document.getElementById('finalCompareGrid');
   if(grid) grid.classList.add('crossfade');
-  setTimeout(() => { renderFinalCompare(pair); }, 220);
+  setTimeout(() => { renderFinalCompare(buildIds); }, 220);
 }
 
 function renderHome(){
@@ -3030,6 +3068,7 @@ function toggleCompare(event, productId, category){
     compareState.items = compareState.items.filter(id => id !== productId);
     if(compareState.items.length === 0) compareState.type = null;
   } else {
+    if(compareState.items.length >= MAX_GENERAL_COMPARISONS){ showBuildToast('Select up to five lenses'); return; }
     if(!compareState.type) compareState.type = category;
     compareState.items.push(productId);
   }
@@ -3047,18 +3086,21 @@ function clearCompare(){
 
 function compareBar(){
   if(compareState.items.length === 0) return "";
-  const names = compareState.items.map(id => {
+  const chips = compareState.items.map(id => {
     const p = findProduct(id);
-    return p ? `${SERIES_NAMES[p.series]}: ${p.name.replace("ZEISS ","").replace("SmartLife PRO ","")}` : id;
-  }).join(" · ");
+    const label = p
+      ? [buildSeriesCode(p), buildTypeCode(compareState.type), buildDesignCode(p, compareState.type)].filter(Boolean).join(" ")
+      : id;
+    return `<span class="build-chip selected compare-summary-chip">${label}</span>`;
+  }).join("");
   const canCompare = compareState.items.length >= 2;
   return `
     <div class="compare-bar">
-      <div>
+      <div class="compare-bar-main">
         <div class="compare-bar-title">${compareState.items.length} selected for ${categoryNames[compareState.type]} comparison</div>
-        <div class="compare-bar-sub">${names}</div>
+        <div class="compare-bar-sub">${chips}</div>
       </div>
-      <div style="display:flex;gap:10px">
+      <div class="compare-bar-actions">
         <button class="btn" ${canCompare ? `onclick="renderCompareSelected()"` : `style="opacity:.45;pointer-events:none"`}>Compare</button>
         <button class="btn" onclick="clearCompare()">Clear</button>
       </div>
@@ -3082,13 +3124,13 @@ function alignCompareSections(){
 
 function renderCompareSelected(){
   state.screen = "compare";
-  const selected = compareState.items.map(id => findProduct(id)).filter(Boolean);
+  const selected = compareState.items.map(id => findProduct(id)).filter(Boolean).slice(0,MAX_GENERAL_COMPARISONS);
   const cards = selected.map(p => `
     <div class="compare-card">
       <div class="compare-name">${p.name}</div>
       <div class="compare-stars">${comfortStars(p.id)}</div>
       <div class="compare-tag">${p.tag}</div>
-      ${p.image ? `<div class="compare-image-stage"><img src="${p.image}" alt="${p.name}"></div>` : ``}
+      ${p.image ? `<div class="compare-image-stage compare-image-link" role="button" tabindex="0" aria-label="Open ${p.name} menu" onclick="openProductFromComparison('${p.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductFromComparison('${p.id}')}"><img src="${p.image}" alt="${p.name}"></div>` : ``}
       <div class="compare-price">From ${money(p.from)}</div>
       <div class="compare-section-title">Why this lens</div>
       <div class="compare-why-body">${(p.why || []).map(x => `<div class="compare-bullet"><span>${x}</span></div>`).join("")}</div>
@@ -3096,13 +3138,31 @@ function renderCompareSelected(){
       <div class="compare-req-body">${(p.requirements || []).filter(Boolean).map(x => `<div class="compare-bullet"><span>${x}</span></div>`).join("")}</div>
     </div>
   `).join("");
-  app(`Compare ${categoryNames[compareState.type]}`, heroBanner() + `<div class="compare-grid">${cards}</div>${compareBar()}`);
+  app(`Compare ${categoryNames[compareState.type]}`, heroBanner() + `<div class="compare-grid" style="--compare-count:${selected.length}">${cards}</div>${compareBar()}`);
   alignCompareSections();
 }
 
 
-function openProduct(id){
+function openProductFromComparison(id){
+  openProduct(id, true);
+}
+
+function openProduct(id, fromComparison=false){
   const p = findProduct(id);
+  if(!p) return;
+  if(fromComparison){
+    comparisonDetailReturn = {
+      type: compareState.type,
+      items: compareState.items.slice(),
+      series: state.series,
+      category: state.category,
+      scrollY: window.scrollY || document.documentElement.scrollTop || 0
+    };
+    state.series = p.series;
+    state.category = compareState.type || state.category;
+  } else {
+    comparisonDetailReturn = null;
+  }
   state.screen = "detail";
   state.product = id;
   state.index = p.defaultIndex || "1.50";
@@ -4307,6 +4367,7 @@ function startNewConsultation(){
   closeHomeReset();
   state = {screen:"home",series:null,category:null,product:null,index:"1.50",coating:null,options:{}};
   compareState = {type:null,items:[]};
+  comparisonDetailReturn = null;
   lastStickyTotalText = "";
   document.querySelectorAll(".pro-popover.show,.iscription-popover.show,.pro-popover.revealing,.iscription-popover.revealing").forEach(p => {
     p.classList.remove("show");
@@ -4322,6 +4383,17 @@ function goBack(){
   if(state.screen === "summary"){ state.screen="detail"; renderDetail(); return; }
   if(state.screen === "finalCompare"){ renderStickyFooter(); state.screen="detail"; if(state.product){ renderDetail(); } else { renderHome(); } return; }
   if(state.screen === "compare"){ renderProducts(compareState.type || state.category); return; }
+  if(state.screen === "detail" && comparisonDetailReturn){
+    const destination = comparisonDetailReturn;
+    comparisonDetailReturn = null;
+    compareState = {type:destination.type,items:destination.items.slice()};
+    state.series = destination.series;
+    state.category = destination.category;
+    state.product = null;
+    renderCompareSelected();
+    requestAnimationFrame(() => window.scrollTo({top:destination.scrollY,left:0,behavior:"auto"}));
+    return;
+  }
   if(state.screen === "detail"){ renderProducts(state.category); return; }
   if(state.screen === "products"){ renderCategories(); return; }
   if(state.screen === "categories"){ renderHome(); return; }
