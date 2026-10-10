@@ -1,1 +1,2 @@
-Trigger fresh GitHub Pages deployment.
+2026-10-10-single-product-layout-r2
+Compact centred single-product layout; automatic family comparison and cross-series saved builds retained.

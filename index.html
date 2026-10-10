@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="zic-release" content="2026-09-18-category-descriptions">
+<meta name="zic-release" content="2026-10-10-single-product-layout-r2">
 <title>ZEISS Lens Navigator Stable 7</title>
 <style>
 :root{
@@ -164,6 +164,21 @@ body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,
 .compare-section-title{height:28px;display:flex;align-items:flex-end;margin-top:14px;margin-bottom:8px;font-size:14px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:#6b7280}.compare-why-body,.compare-req-body{display:block}
 @media(max-width:900px){.compare-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.compare-grid{grid-template-columns:1fr}}
+
+/* A lone design uses a compact product card rather than a stretched column. */
+.compare-grid.compare-single{display:block;max-width:1000px;margin:0 auto}
+.compare-single .compare-card{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:32px;padding:28px;align-items:start}
+.compare-single-main,.compare-single-info{min-width:0}
+.compare-single .compare-name{min-height:0;font-size:24px;line-height:1.25}
+.compare-single .compare-tag{min-height:0;margin:8px 0 16px}
+.compare-single .compare-image-stage{height:270px}
+.compare-single .compare-section-title{height:auto;margin-top:22px;align-items:flex-start}
+.compare-single-info>.compare-section-title:first-child{margin-top:0}
+.compare-single .compare-bullet{font-size:16px;line-height:1.5;margin:10px 0}
+@media(max-width:620px){
+  .compare-single .compare-card{grid-template-columns:minmax(0,1fr);gap:24px;padding:20px}
+  .compare-single .compare-image-stage{height:240px}
+}
 
 @media(max-width:760px){
   .app{padding:18px 18px 30px}.nav{grid-template-columns:90px 1fr 90px}.title{font-size:25px}.series-hero-banner{height:130px}.home-title-main{font-size:26px}.zeiss-logo-mark{font-size:24px}
@@ -1918,6 +1933,7 @@ function updateVisibleComplimentaryRows(key){
 
 let compareState = {type:null,items:[]};
 let comparisonDetailReturn = null;
+let comparisonView = {mode:"family", series:null, category:null};
 let consultationBuilds = [];
 let selectedBuildIds = [];
 let activeFinalBuildIds = [];
@@ -2375,7 +2391,7 @@ function app(title, body){
   // Final refinement: Hero page stays clean. Every inner screen gets Home + Back.
   const header = !isHome ? `
       <div class="nav-final">
-        <div class="nav-home" onclick="startNewConsultation()">⌂ Home</div>
+        <div class="nav-home" onclick="renderHome()">⌂ Home</div>
         <div class="nav-back" onclick="goBack()">${backLabel}</div>
       </div>` : ``;
 
@@ -2768,7 +2784,8 @@ function snapshotCurrentBuild(){
     tag:p.tag || "",
     why:p.why || [],
     requirements:p.requirements || [],
-    total:total(),
+    framePrice:framePrice,
+    total:summaryGrandTotal(),
     priceLines:currentPriceLines(p)
   };
 }
@@ -2866,6 +2883,8 @@ function activateBuild(uid){
   state.coating = b.coating;
   state.options = JSON.parse(JSON.stringify(b.options || {}));
   state.complimentaryOptions = JSON.parse(JSON.stringify(b.complimentaryOptions || {}));
+  framePrice = b.framePrice == null ? null : b.framePrice;
+  comparisonDetailReturn = null;
   return true;
 }
 function finalLinePrice(b, matchText){
@@ -2923,6 +2942,7 @@ function finalBuildCard(b){
     ${finalSummaryRow("Index", b.index, indexAmount, "summary-index")}
     ${finalSummaryRow("Coating", b.coatingText, coatingAmount, "summary-coating")}
     ${optionRows.join("")}
+    ${Number(b.framePrice) > 0 ? finalSummaryRow("Frame", "", money(b.framePrice), "summary-frame") : ""}
   </div>`;
 }
 function finalStickyBars(buildIds){
@@ -2985,13 +3005,13 @@ function renderHome(){
   state.screen = "home";
   state.series = null;
   state.category = null;
-  compareState = {type:null,items:[]};
+  comparisonDetailReturn = null;
   const body = `<div class="home-hero-list">${HOME_SERIES_ORDER.map(id => `
     <div id="main-hero-${id}" class="hero-card main-hero" ${hasSeriesIntro(id) ? `data-series-intro="${id}"` : ""} data-main-hero-series="${id}" onclick="handleHeroCardClick(event,'${id}')" ondblclick="openSeriesIntroDirect(event,'${id}')" onpointerdown="startHeroLongPress(event,'${id}')" onpointerup="endHeroLongPress(event)" onpointercancel="endHeroLongPress(event)" onpointerleave="endHeroLongPress(event)" oncontextmenu="event.preventDefault()" aria-label="${SERIES_NAMES[id]}">
       <img draggable="false" src="${HERO_IMAGES[id]}" alt="${SERIES_NAMES[id]}">
     </div>
   `).join("")}</div>`;
-  app("Lens Navigator", body);
+  app("Lens Navigator", body + compareBar());
 }
 
 
@@ -3007,10 +3027,7 @@ function renderCategories(seriesId){
   if(seriesId) state.series = seriesId;
   state.screen = "categories";
   const catsAvailable = Object.keys(seriesData());
-  const visible = compareState.type ? catsAvailable.filter(id => id === compareState.type) : catsAvailable;
-  const note = compareState.type
-    ? `<div class="category-hidden-note">Compare mode active: only ${categoryNames[compareState.type]} lenses are shown.</div>`
-    : "";
+  const visible = catsAvailable;
 
   const cats = visible.map(id => `
     <div class="product-card" onclick="renderProducts('${id}')">
@@ -3022,7 +3039,7 @@ function renderCategories(seriesId){
     </div>
   `).join("");
 
-  app(SERIES_NAMES[state.series], heroBanner() + note + cats + compareBar());
+  app(SERIES_NAMES[state.series], heroBanner() + cats + compareBar());
 }
 
 
@@ -3030,27 +3047,24 @@ function productDesignHeader(p){
   return `<div class="product-name">${p.name}<span class="range-icon" onclick="openRange(event,'${p.id}')">ⓘ</span></div><div class="comfort-stars">${comfortStars(p.id)}</div>`;
 }
 
-function renderProducts(category){
-  state.screen = "products";
-  state.category = category;
-  const cards = (seriesData()[category] || []).map(p => `
-    <div class="product-card" onclick="openProduct('${p.id}')">
-      <div>
-        ${productDesignHeader(p)}
-        <div class="from">From<br>${money(fromPrice(p))}</div>
-        <div class="tagline">${p.tag}</div>
-        ${compareCheckbox(p, category)}
-      </div>
-      <div class="chev">›</div>
-    </div>
-  `).join("");
+// Family comparisons do not populate the manual cross-series selection.
+function prepareComparisonType(category){
+  if(compareState.type && compareState.type !== category && compareState.items.length){
+    if(!window.confirm(`Start a ${categoryNames[category]} comparison? This will clear your ${categoryNames[compareState.type]} selections.`)) return false;
+    compareState = {type:null,items:[]};
+  }
+  return true;
+}
 
-  app(`${SERIES_NAMES[state.series]} · ${categoryNames[category]}`, heroBanner() + cards + compareBar());
+function renderProducts(category){
+  if(!prepareComparisonType(category)) return;
+  comparisonDetailReturn = null;
+  comparisonView = {mode:"family",series:state.series,category};
+  renderComparison();
 }
 
 
 function compareCheckbox(p, category){
-  if(compareState.type && compareState.type !== category) return "";
   const selected = compareState.items.includes(p.id);
   return `
     <div class="compare-check" onclick="toggleCompare(event,'${p.id}','${category}')">
@@ -3061,8 +3075,8 @@ function compareCheckbox(p, category){
 }
 
 function toggleCompare(event, productId, category){
-  event.stopPropagation();
-  if(compareState.type && compareState.type !== category) return;
+  if(event) event.stopPropagation();
+  if(!prepareComparisonType(category)) return;
 
   if(compareState.items.includes(productId)){
     compareState.items = compareState.items.filter(id => id !== productId);
@@ -3073,15 +3087,14 @@ function toggleCompare(event, productId, category){
     compareState.items.push(productId);
   }
 
-  if(state.screen === "categories") renderCategories();
-  else if(state.screen === "products") renderProducts(state.category);
+  refreshComparisonScreen();
 }
 
 function clearCompare(){
   compareState.type = null;
   compareState.items = [];
-  if(state.screen === "products") renderProducts(state.category);
-  else renderHome();
+  if(comparisonView.mode === "selected") comparisonView = {mode:"family",series:state.series,category:state.category};
+  refreshComparisonScreen();
 }
 
 function compareBar(){
@@ -3122,24 +3135,52 @@ function alignCompareSections(){
   });
 }
 
+function refreshComparisonScreen(){
+  if(state.screen === "compare"){
+    if(comparisonView.mode === "selected" && !compareState.items.length) comparisonView = {mode:"family",series:state.series,category:state.category};
+    renderComparison();
+  }
+  else if(state.screen === "categories") renderCategories();
+  else if(state.screen === "home") renderHome();
+}
+
 function renderCompareSelected(){
+  if(compareState.items.length < 2) return;
+  if(!state.series) state.series = findProduct(compareState.items[0]).series;
+  comparisonView = {mode:"selected",series:state.series,category:compareState.type};
+  renderComparison();
+}
+
+function renderComparison(){
+  const family = comparisonView.mode === "family";
+  const category = family ? comparisonView.category : compareState.type;
+  if(!category || !state.series){ renderHome(); return; }
   state.screen = "compare";
-  const selected = compareState.items.map(id => findProduct(id)).filter(Boolean).slice(0,MAX_GENERAL_COMPARISONS);
+  state.category = category;
+  const selected = family
+    ? (seriesData()[category] || [])
+    : compareState.items.map(id => findProduct(id)).filter(Boolean).slice(0,MAX_GENERAL_COMPARISONS);
+  if(!selected.length){ renderCategories(); return; }
+  const singleProduct = selected.length === 1;
   const cards = selected.map(p => `
     <div class="compare-card">
-      <div class="compare-name">${p.name}</div>
+      ${singleProduct ? '<div class="compare-single-main">' : ''}
+      <div class="compare-name">${p.name}<span class="range-icon" onclick="openRange(event,'${p.id}')">ⓘ</span></div>
       <div class="compare-stars">${comfortStars(p.id)}</div>
       <div class="compare-tag">${p.tag}</div>
       ${p.image ? `<div class="compare-image-stage compare-image-link" role="button" tabindex="0" aria-label="Open ${p.name} menu" onclick="openProductFromComparison('${p.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductFromComparison('${p.id}')}"><img src="${p.image}" alt="${p.name}"></div>` : ``}
-      <div class="compare-price">From ${money(p.from)}</div>
+      <div class="compare-price">From ${money(fromPrice(p))}</div>
+      ${compareCheckbox(p, category)}
+      ${singleProduct ? '</div><div class="compare-single-info">' : ''}
       <div class="compare-section-title">Why this lens</div>
       <div class="compare-why-body">${(p.why || []).map(x => `<div class="compare-bullet"><span>${x}</span></div>`).join("")}</div>
       <div class="compare-section-title">Ordering Requirements</div>
       <div class="compare-req-body">${(p.requirements || []).filter(Boolean).map(x => `<div class="compare-bullet"><span>${x}</span></div>`).join("")}</div>
+      ${singleProduct ? '</div>' : ''}
     </div>
   `).join("");
-  app(`Compare ${categoryNames[compareState.type]}`, heroBanner() + `<div class="compare-grid" style="--compare-count:${selected.length}">${cards}</div>${compareBar()}`);
-  alignCompareSections();
+  app(`${family ? SERIES_NAMES[state.series] + " · " : "Compare "}${categoryNames[category]}`, heroBanner() + `<div class="compare-grid${singleProduct ? ' compare-single' : ''}" style="--compare-count:${selected.length}">${cards}</div>${compareBar()}`);
+  if(!singleProduct) alignCompareSections();
 }
 
 
@@ -3152,14 +3193,13 @@ function openProduct(id, fromComparison=false){
   if(!p) return;
   if(fromComparison){
     comparisonDetailReturn = {
-      type: compareState.type,
-      items: compareState.items.slice(),
+      view: {...comparisonView},
       series: state.series,
       category: state.category,
       scrollY: window.scrollY || document.documentElement.scrollTop || 0
     };
     state.series = p.series;
-    state.category = compareState.type || state.category;
+    state.category = comparisonView.category || state.category;
   } else {
     comparisonDetailReturn = null;
   }
@@ -4341,12 +4381,11 @@ function closePopup(){
 
 
 function switchSeries(series){
+  const category = state.category || compareState.type;
   state.series = series;
   state.product = null;
-
-  if(compareState.type){
-    state.category = compareState.type;
-    renderProducts(compareState.type);
+  if(category && (seriesData()[category] || []).length){
+    renderProducts(category);
   } else {
     state.category = null;
     renderCategories(series);
@@ -4368,6 +4407,7 @@ function startNewConsultation(){
   state = {screen:"home",series:null,category:null,product:null,index:"1.50",coating:null,options:{}};
   compareState = {type:null,items:[]};
   comparisonDetailReturn = null;
+  comparisonView = {mode:"family",series:null,category:null};
   lastStickyTotalText = "";
   document.querySelectorAll(".pro-popover.show,.iscription-popover.show,.pro-popover.revealing,.iscription-popover.revealing").forEach(p => {
     p.classList.remove("show");
@@ -4382,15 +4422,19 @@ function startNewConsultation(){
 function goBack(){
   if(state.screen === "summary"){ state.screen="detail"; renderDetail(); return; }
   if(state.screen === "finalCompare"){ renderStickyFooter(); state.screen="detail"; if(state.product){ renderDetail(); } else { renderHome(); } return; }
-  if(state.screen === "compare"){ renderProducts(compareState.type || state.category); return; }
+  if(state.screen === "compare"){
+    if(comparisonView.mode === "selected") renderProducts(state.category);
+    else renderCategories();
+    return;
+  }
   if(state.screen === "detail" && comparisonDetailReturn){
     const destination = comparisonDetailReturn;
     comparisonDetailReturn = null;
-    compareState = {type:destination.type,items:destination.items.slice()};
+    comparisonView = {...destination.view};
     state.series = destination.series;
     state.category = destination.category;
     state.product = null;
-    renderCompareSelected();
+    renderComparison();
     requestAnimationFrame(() => window.scrollTo({top:destination.scrollY,left:0,behavior:"auto"}));
     return;
   }
