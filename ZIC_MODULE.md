@@ -5,8 +5,8 @@
 - **Purpose:** Staff-operated ZEISS lens consultation catalogue for Maxiview Optometrist.
 - **Primary device:** 13-inch iPad Air in portrait orientation.
 - **Application type:** Static single-page web application hosted with GitHub Pages.
-- **Current package:** `ZIC_SINGLE_PRODUCT_LAYOUT_20261010_R2.zip`
-- **Current release marker:** `2026-10-10-single-product-layout-r2`
+- **Current package:** `ZIC_PRODUCT_OPTIONS_FIX_20261010_R3.zip`
+- **Current release marker:** `2026-10-10-product-options-access-r3`
 - **Source of truth:** The working `ZIC` GitHub repository and the latest verified full ZIP package.
 
 This file documents the approved structure and behaviour of the current ZIC. It is not application code and does not affect the catalogue when placed in the repository.
@@ -65,7 +65,8 @@ The category descriptions must remain concise and must not mention the wearer's 
 - A series with no matching lens type opens its available category menu.
 - The selected-lens bar uses short-form blue chips, such as `CMP PROG Pure`, `CMP PROG Superb` and `CMP PROG I3`.
 - The old **Difference RM…** output has been removed.
-- Tapping a product image opens that exact lens configuration menu.
+- Tapping a product image or product name opens that exact lens configuration menu.
+- Products without images show a clearly labelled Choose options button in place of the image; it opens the same menu. Product names and these buttons use native buttons for keyboard access.
 - The menu shows **‹ Comparison** so staff can return directly to the same comparison.
 - Selected lenses and comparison scroll position are preserved when returning.
 
@@ -253,3 +254,9 @@ No browser automation was available in this session. Actual iPad layout, touch i
 Single-product comparison views now use the approved compact, centred two-column card. The enlarged image stage is 270 px high, or 240 px on narrow screens. Multi-product alignment spacing is not applied to a lone design. Cross-series comparison, prices, images, PDFs, saved builds and printing retain the earlier October release behavior.
 
 The final ZIP retains 339 files. Only `index.html`, `trigger/deploy.txt` and `ZIC_MODULE.md` differ from the earlier October package. All 336 assets are byte-identical. The existing ten behavioral checks pass against the packaged HTML. Browser and actual iPad visual testing remain unavailable in this session.
+
+## October 10, 2026 R3 options access fix
+
+Every comparison product name now opens its exact lens options menu. The seven products without images also show a Choose options button. The prescription information icon and Compare checkbox remain separate controls. Family and manual cross-series comparison return behavior is preserved.
+
+Twelve behavioral checks pass against the final ZIP HTML, including opening all 21 product names, opening the seven products without images, and returning from an image-free product to the same manual cross-series selection. Browser and actual iPad testing remain unavailable. The package retains 339 files and all 336 assets unchanged.

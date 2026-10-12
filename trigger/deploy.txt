@@ -1,2 +1,2 @@
-2026-10-10-single-product-layout-r2
-Compact centred single-product layout; automatic family comparison and cross-series saved builds retained.
+2026-10-10-product-options-access-r3
+Tappable lens names; Choose options for products without images; R2 layout and comparisons retained.
