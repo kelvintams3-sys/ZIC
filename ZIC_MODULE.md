@@ -5,8 +5,8 @@
 - **Purpose:** Staff-operated ZEISS lens consultation catalogue for Maxiview Optometrist.
 - **Primary device:** 13-inch iPad Air in portrait orientation.
 - **Application type:** Static single-page web application hosted with GitHub Pages.
-- **Current package:** `ZIC_NAME_ONLY_OPTIONS_20261012_R4.zip`
-- **Current release marker:** `2026-10-12-name-only-options-r4`
+- **Current package:** `ZIC_CLEARMIND_SINGLE_VISION_20261012_R5.zip`
+- **Current release marker:** `2026-10-12-clearmind-single-vision-r5`
 - **Source of truth:** The working `ZIC` GitHub repository and the latest verified full ZIP package.
 
 This file documents the approved structure and behaviour of the current ZIC. It is not application code and does not affect the catalogue when placed in the repository.
@@ -65,8 +65,9 @@ The category descriptions must remain concise and must not mention the wearer's 
 - A series with no matching lens type opens its available category menu.
 - The selected-lens bar uses short-form blue chips, such as `CMP PROG Pure`, `CMP PROG Superb` and `CMP PROG I3`.
 - The old **Difference RM…** output has been removed.
-- Tapping a product image or product name opens that exact lens configuration menu.
-- Products without images have no image placeholder or options button. Their tappable product names open the options menu and support keyboard access.
+- Products with images open their exact lens configuration menu from the image; their product names are plain text.
+- Products without images have no image placeholder or options button. Their tappable product names open the options menu and support keyboard access. Five products currently have no image.
+- For ClearMind Single Vision, the separate title-end information button opens only the assigned official page: D page 8 for Single Vision PRO; E page 2 for Single Vision Individual PRO. Closing it preserves the current comparison and scroll position.
 - The menu shows **‹ Comparison** so staff can return directly to the same comparison.
 - Selected lenses and comparison scroll position are preserved when returning.
 
@@ -111,6 +112,19 @@ Additional approved image behaviour:
 - The ClearMind hero artwork uses uppercase **ZEISS**.
 - Current ClearMind hero asset: `assets/images/7f1bd72abbc3359f.png`.
 
+### ClearMind Single Vision images and information
+
+| Product | Approved artwork | Title-end information page |
+| --- | --- | --- |
+| ZEISS ClearMind PRO Single Vision | `assets/images/cm_single_vision_pro.png` | Page 8 of `D_ZEISS RRP 2026 - ClearMind.pdf` |
+| ZEISS ClearMind PRO Single Vision Individual 3 | `assets/images/cm_single_vision_individual_pro.png` | Page 2 of `E_ZEISS RRP 2026 - ClearMind Indi.pdf` |
+
+The approved artwork uses matching landscape proportions in the existing comparison and detail image stages. Single Vision retains the supplied larger-source diagram. Individual uses the black frame and blue data network, the large 12.5 MILLION DATA POINTS message and “A lens tailored to you.” The removed “Research into how people see” callout and arrow are absent.
+
+Individual's comparison heading is “12.5 million data points. Tailored to you.” Its Details also explain how ZEISS combines personal measurements with research into everyday visual behaviour to tailor the lens to visual needs, facial anatomy and the chosen frame.
+
+Each new information PDF contains only its assigned source page and uses the matching existing rendered page for reliable display. Prescription availability remains accessible separately in the two products' Details screens. Other products retain their existing information and prescription controls.
+
 ## Features that must be preserved
 
 - Product-specific pricing and power-range information.
@@ -142,8 +156,8 @@ ZIC/
 
 Current verified asset counts:
 
-- 157 image files
-- 39 PDF files
+- 159 image files
+- 41 PDF files
 - 140 rendered PDF-page images
 
 `trigger/deploy.txt` is retained to trigger a fresh GitHub Pages deployment when required.
@@ -213,7 +227,8 @@ Before changing ZIC:
 - General comparison accepts five lenses and rejects a sixth.
 - Saved-build comparison accepts three selected builds and rejects a fourth.
 - General comparison uses short-form chips and has no Difference output.
-- Comparison image opens the exact lens menu.
+- Comparison images open the exact lens menu; image-free product names open the menu.
+- ClearMind Single Vision and Individual information buttons open only D page 8 and E page 2 respectively, without entering options or altering the comparison.
 - **‹ Comparison** restores the same comparison and scroll position.
 - Complimentary pricing does not overlap and totals correctly as RM0.
 - Single and comparison Total panels use the approved pale-blue highlight.
@@ -266,3 +281,13 @@ Twelve behavioral checks pass against the final ZIP HTML, including opening all 
 Removed the Choose options control entirely, including its empty image-sized area and styles. Products without images now place the starting price and details directly below the product tagline. Product names retain the working options-menu navigation. Products with actual images still open from either the name or image.
 
 The final package has 339 files. Only `index.html`, `trigger/deploy.txt` and `ZIC_MODULE.md` differ from R3; all 336 assets are byte-identical. Twelve behavioral checks verify existing comparison flows plus all 21 tappable product names, no placeholder for the seven products without images, and return to the same manual cross-series selection. Actual iPad visual testing remains unavailable in this session.
+
+## October 12, 2026 R5 ClearMind Single Vision update
+
+Added both approved Single Vision graphics, the Individual heading and Details explanation, and separate title-end information buttons in comparison and Details. Single Vision opens only D page 8; Individual opens only E page 2. Existing prescription availability is retained as a text link under Ordering Requirements in Details.
+
+Across the catalogue, products with images open their options from the image only. The remaining five products without images retain tappable names and keyboard access. Comparison state and return navigation remain intact.
+
+The final full package has 343 files. Changed existing files: `index.html`, `trigger/deploy.txt`, and `ZIC_MODULE.md`. Added files: `assets/images/cm_single_vision_pro.png`, `assets/images/cm_single_vision_individual_pro.png`, `assets/pdfs/clearmind_single_vision_page8.pdf`, and `assets/pdfs/clearmind_single_vision_individual_page2.pdf`. All 336 original assets are byte-identical to R4.
+
+Eleven automated behavioral checks passed against the final packaged HTML, covering both scripts, all series and families, image-aware name navigation, approved artwork and Details copy, exact information-page routing, unchanged comparison state and scroll, retained prescription pages, cross-series return navigation, comparison limits, three saved builds with independent totals, local asset availability, and unchanged pricing/requirements/benefit lists. The two extracted PDF pages were rendered and visually inspected. Browser automation was unavailable, so actual iPad layout, touch, Apple Pencil and Bluetooth printing were not exercised.

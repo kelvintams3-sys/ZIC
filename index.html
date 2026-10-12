@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="zic-release" content="2026-10-12-name-only-options-r4">
+<meta name="zic-release" content="2026-10-12-clearmind-single-vision-r5">
 <title>ZEISS Lens Navigator Stable 7</title>
 <style>
 :root{
@@ -161,6 +161,11 @@ body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,
 .compare-image-stage.compare-image-link:active{transform:scale(.985);border-color:#1266d6;box-shadow:0 0 0 2px rgba(18,102,214,.08)}
 .compare-name-link{appearance:none;border:0;background:none;padding:0;color:inherit;font:inherit;text-align:left;cursor:pointer;touch-action:manipulation}
 .compare-name-link:focus-visible{outline:2px solid var(--ios);outline-offset:4px}
+.product-info-button{appearance:none;border:0;background:none;padding:4px;min-width:32px;min-height:32px;line-height:1;color:var(--ios);font-family:inherit;flex:0 0 auto;touch-action:manipulation}
+.product-info-button:focus-visible,.prescription-link:focus-visible{outline:2px solid var(--ios);outline-offset:3px}
+.prescription-link{appearance:none;border:0;background:none;padding:8px 0;margin-top:8px;font:inherit;font-size:16px;color:var(--ios);text-decoration:underline;cursor:pointer;touch-action:manipulation}
+.lens-insight{font-size:20px;line-height:1.45;color:#374151;margin:0 0 14px}
+.lens-insight-title{font-weight:750;color:var(--ink);margin-bottom:8px}
 .compare-price{font-size:18px;font-weight:750;color:var(--ink);margin-top:12px}
 .compare-bullet{font-size:15px;color:#374151;line-height:1.35;margin:8px 0;display:grid;grid-template-columns:14px 1fr;column-gap:6px}.compare-bullet::before{content:'•';grid-column:1}.compare-bullet span{grid-column:2}
 .compare-section-title{height:28px;display:flex;align-items:flex-end;margin-top:14px;margin-bottom:8px;font-size:14px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:#6b7280}.compare-why-body,.compare-req-body{display:block}
@@ -1451,6 +1456,11 @@ document.addEventListener("click", function(){
 const CLEARMIND_PRO_INFO_PDF_DATA = "assets/pdfs/17582f2a86dcccd0.pdf";
 const CLEARMIND_SINGLE_VISION_INFO_PDF_DATA = "assets/pdfs/9302c353a85cfdf7.pdf";
 
+const CLEARMIND_SINGLE_VISION_PAGE_INFO = {
+  cmsv: {title:"ClearMind Single Vision",pdf:"assets/pdfs/clearmind_single_vision_page8.pdf"},
+  cmindsv: {title:"ClearMind Single Vision Individual",pdf:"assets/pdfs/clearmind_single_vision_individual_page2.pdf"}
+};
+
 const CLEARMIND_DIGITAL_INFO_PDF_DATA = "assets/pdfs/f8a820248e7d77e3.pdf";
 
 const CLEARMIND_PROGRESSIVE_INFO_PDF_DATA = "assets/pdfs/c37c126a27ffbc57.pdf";
@@ -1485,6 +1495,8 @@ function comfortStars(id){
 }
 
 const PDF_PAGE_IMAGE_MAP = {
+  "assets/pdfs/clearmind_single_vision_page8.pdf": ["assets/pdf_pages/9302c353a85cfdf7_p2.jpg"],
+  "assets/pdfs/clearmind_single_vision_individual_page2.pdf": ["assets/pdf_pages/f2bbfc381a763950_p2.jpg"],
   "assets/pdfs/smartlife_young_subhero_86b742b98017.pdf": ["assets/images/smartlife_young_subhero_86b742b98017/page-1.jpg"],
   "assets/pdfs/hero_light2_1a68d779dc28.pdf": ["assets/images/hero_light2_1a68d779dc28/continuous_scroll.jpg"],
   "assets/pdfs/hero_smartlife_individual_3_24584e8608c9.pdf": ["assets/images/hero_smartlife_individual_3_24584e8608c9/continuous_scroll.jpg"],
@@ -1839,6 +1851,16 @@ DATA.clearmind.digital.forEach(p => {
   if (CLEARMIND_DIGITAL_WHY_IMAGES[p.id]) p.image = CLEARMIND_DIGITAL_WHY_IMAGES[p.id];
 });
 // End ClearMind digital why-this-lens images
+
+// Approved ClearMind Single Vision artwork and Individual explanation.
+DATA.clearmind.single.forEach(p => {
+  if(p.id === "cmsv") p.image = "assets/images/cm_single_vision_pro.png";
+  if(p.id === "cmindsv"){
+    p.image = "assets/images/cm_single_vision_individual_pro.png";
+    p.tag = "12.5 million data points. Tailored to you.";
+    p.detailsIntro = "ZEISS combines your measurements with research into how people use their eyes in everyday life. This helps tailor your Individual lens to your visual needs, facial anatomy and chosen frame—for clear, comfortable vision.";
+  }
+});
 
 // Light 2 digital why-this-lens image
 DATA.light.digital.forEach(p => {
@@ -3167,7 +3189,7 @@ function renderComparison(){
   const cards = selected.map(p => `
     <div class="compare-card">
       ${singleProduct ? '<div class="compare-single-main">' : ''}
-      <div class="compare-name"><button type="button" class="compare-name-link" onclick="openProductFromComparison('${p.id}')">${p.name}</button><span class="range-icon" onclick="openRange(event,'${p.id}')">ⓘ</span></div>
+      <div class="compare-name">${p.image ? p.name : `<button type="button" class="compare-name-link" onclick="openProductFromComparison('${p.id}')">${p.name}</button>`}${productInfoIconHtml(p)}</div>
       <div class="compare-stars">${comfortStars(p.id)}</div>
       <div class="compare-tag">${p.tag}</div>
       ${p.image ? `<div class="compare-image-stage compare-image-link" role="button" tabindex="0" aria-label="Open ${p.name} menu" onclick="openProductFromComparison('${p.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductFromComparison('${p.id}')}"><img src="${p.image}" alt="${p.name}"></div>` : ``}
@@ -3188,6 +3210,23 @@ function renderComparison(){
 
 function openProductFromComparison(id){
   openProduct(id, true);
+}
+
+function productInfoIconHtml(p, detail=false){
+  const iconClass = detail ? "info" : "range-icon";
+  if(!CLEARMIND_SINGLE_VISION_PAGE_INFO[p.id]){
+    return `<span class="${iconClass}" onclick="openRange(event,'${p.id}')">ⓘ</span>`;
+  }
+  return `<button type="button" class="${iconClass} product-info-button" aria-label="More about ${p.name}" onclick="openClearMindSingleVisionPage(event,'${p.id}')">ⓘ</button>`;
+}
+
+function openClearMindSingleVisionPage(event, id){
+  if(event) event.stopPropagation();
+  const info = CLEARMIND_SINGLE_VISION_PAGE_INFO[id];
+  if(!info) return;
+  currentPdfCollection = null;
+  currentPdfCollectionIndex = 0;
+  openPdfInsert(info.title, info.pdf);
 }
 
 function openProduct(id, fromComparison=false){
@@ -3298,7 +3337,7 @@ function productTitleHtml(p){
     .replace(" Digital Individual 3"," Digital<br>Individual 3")
     .replace(" Single Vision Individual 3"," Single Vision<br>Individual 3");
 
-  if(p.series === "clearmind" && p.name.includes("Single Vision")){
+  if(p.id === "cmsv" && p.name.includes("Single Vision")){
     name = name.replace("Single Vision", `<span class="singlevision-word" onclick="openClearMindSingleVisionInfo(event)">Single Vision</span>`);
   }
 
@@ -3338,8 +3377,7 @@ function openDuraVisionCoatingInfo(event){
 }
 
 function openClearMindSingleVisionInfo(event){
-  event.stopPropagation();
-  openPdfInsert("ClearMind Single Vision", CLEARMIND_SINGLE_VISION_INFO_PDF_DATA);
+  openClearMindSingleVisionPage(event, "cmsv");
 }
 
 function openClearMindDigitalInfo(event){
@@ -3358,8 +3396,7 @@ function openClearMindProgressiveIndi3Info(event){
 }
 
 function openClearMindSingleVisionIndi3Info(event){
-  event.stopPropagation();
-  openPdfInsert("ClearMind Single Vision Individual 3", CLEARMIND_SINGLE_VISION_INDI3_INFO_PDF_DATA);
+  openClearMindSingleVisionPage(event, "cmindsv");
 }
 
 function toggleProPopover(event){
@@ -3548,7 +3585,7 @@ function renderDetail(){
       <div class="detail-zeiss-logo"><img src="assets/images/b20287ef930a327f.png" alt="ZEISS"></div>
       <div class="product-head">
         <h1>${productTitleHtml(p)}</h1>
-        <span class="info" onclick="openRange(event,'${p.id}')">ⓘ</span>
+        ${productInfoIconHtml(p, true)}
       </div>
       <div class="detail-stars">${comfortStars(p.id)}</div>
     </div>
@@ -3577,12 +3614,14 @@ function renderDetail(){
     <div class="panel">
       <div class="label">Why this lens</div>
       ${p.image ? `<div class="why-stage"><img src="${p.image}" alt="${p.name}"></div>` : ``}
+      ${p.detailsIntro ? `<div class="lens-insight"><div class="lens-insight-title">${p.tag}</div>${p.detailsIntro}</div>` : ``}
       ${benefits}
     </div>
 
     <div class="panel">
       <div class="label">Ordering Requirements</div>
       ${req}
+      ${CLEARMIND_SINGLE_VISION_PAGE_INFO[p.id] ? `<button type="button" class="prescription-link" onclick="openRange(event,'${p.id}')">Prescription availability</button>` : ``}
     </div>
   `);
 }
