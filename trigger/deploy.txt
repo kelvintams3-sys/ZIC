@@ -1,2 +1,2 @@
-2026-10-10-product-options-access-r3
-Tappable lens names; Choose options for products without images; R2 layout and comparisons retained.
+2026-10-12-name-only-options-r4
+Remove options buttons and blank placeholders; retain tappable lens names and comparison navigation.

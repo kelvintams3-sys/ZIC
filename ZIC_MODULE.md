@@ -5,8 +5,8 @@
 - **Purpose:** Staff-operated ZEISS lens consultation catalogue for Maxiview Optometrist.
 - **Primary device:** 13-inch iPad Air in portrait orientation.
 - **Application type:** Static single-page web application hosted with GitHub Pages.
-- **Current package:** `ZIC_PRODUCT_OPTIONS_FIX_20261010_R3.zip`
-- **Current release marker:** `2026-10-10-product-options-access-r3`
+- **Current package:** `ZIC_NAME_ONLY_OPTIONS_20261012_R4.zip`
+- **Current release marker:** `2026-10-12-name-only-options-r4`
 - **Source of truth:** The working `ZIC` GitHub repository and the latest verified full ZIP package.
 
 This file documents the approved structure and behaviour of the current ZIC. It is not application code and does not affect the catalogue when placed in the repository.
@@ -66,7 +66,7 @@ The category descriptions must remain concise and must not mention the wearer's 
 - The selected-lens bar uses short-form blue chips, such as `CMP PROG Pure`, `CMP PROG Superb` and `CMP PROG I3`.
 - The old **Difference RM…** output has been removed.
 - Tapping a product image or product name opens that exact lens configuration menu.
-- Products without images show a clearly labelled Choose options button in place of the image; it opens the same menu. Product names and these buttons use native buttons for keyboard access.
+- Products without images have no image placeholder or options button. Their tappable product names open the options menu and support keyboard access.
 - The menu shows **‹ Comparison** so staff can return directly to the same comparison.
 - Selected lenses and comparison scroll position are preserved when returning.
 
@@ -260,3 +260,9 @@ The final ZIP retains 339 files. Only `index.html`, `trigger/deploy.txt` and `ZI
 Every comparison product name now opens its exact lens options menu. The seven products without images also show a Choose options button. The prescription information icon and Compare checkbox remain separate controls. Family and manual cross-series comparison return behavior is preserved.
 
 Twelve behavioral checks pass against the final ZIP HTML, including opening all 21 product names, opening the seven products without images, and returning from an image-free product to the same manual cross-series selection. Browser and actual iPad testing remain unavailable. The package retains 339 files and all 336 assets unchanged.
+
+## October 12, 2026 R4 name-only options access
+
+Removed the Choose options control entirely, including its empty image-sized area and styles. Products without images now place the starting price and details directly below the product tagline. Product names retain the working options-menu navigation. Products with actual images still open from either the name or image.
+
+The final package has 339 files. Only `index.html`, `trigger/deploy.txt` and `ZIC_MODULE.md` differ from R3; all 336 assets are byte-identical. Twelve behavioral checks verify existing comparison flows plus all 21 tappable product names, no placeholder for the seven products without images, and return to the same manual cross-series selection. Actual iPad visual testing remains unavailable in this session.
